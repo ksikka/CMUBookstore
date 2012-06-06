@@ -13,7 +13,7 @@ $('document').ready(function(){
     complete: function(){$('#ajaxloader').hide()}
   });
 
-  var ajaxify = function(self){
+  var ajaxify = function(self,ret){
     $.ajax({
         type: $(self).attr("method"),
         url: $(self).attr("action"),
@@ -24,12 +24,15 @@ $('document').ready(function(){
         },
         dataType: 'html'
     });
-    return false;
+    return ret;
   }
 
     /* The Bindings */
-  $('#andrew form').submit(function(){return ajaxify(this);});
-  
-  $('#sell form').keydown(function(){return ajaxify(this);});
+  $('#andrew form').submit(function(){return ajaxify(this,false);});
+
+  $('#sell form').keydown(function(){return ajaxify(this,true);});
+
+  $('#buy form').keydown(function(){return ajaxify(this,true);});
+
 
 });

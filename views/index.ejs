@@ -35,25 +35,17 @@
     <p>Start typing into any of the fields and click "Add" next to the textbooks you want to buy.</p>
 
     <h2>Search</h2>
-    <table>
-      <tr>
-        <td>Course #</td>  <td>Course Name</td>  <td>Textbook Name</td>
-      </tr>
-      <tr>
-        <td><input type="text" name="course_number" /></td>
-        <td><input type="text" name="course_name" /></td>
-        <td><input type="text" name="textbook_name" /></td>
-      </tr>
-    </table>
-
-    <h2>Results</h2>
-    <table>
-    <tr>
-      <td>Textbook Name</td><td></td>
-    </tr>
-    </table>
-
-    <h2>List of textbooks</h2>
-    <ul>
-    </ul>
-  </div>
+    <form method="GET" action="/search">
+      <table>
+        <tr>
+          <td>Course #</td>  <td>Course Name</td>  <td>Textbook Name</td>
+        </tr>
+        <tr>
+          <td><input type="text" name="course_number" /></td>
+          <td><input type="text" name="course_name" /></td>
+          <td><input type="text" name="textbook_name" /></td>
+        </tr>
+      </table>
+      <button type="submit" style="display:none">Enter</button>
+    </form>
+</div>

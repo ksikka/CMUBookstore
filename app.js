@@ -85,7 +85,8 @@ app.put('/andrew',function(req,res){
 });
 
 app.get('/search',function(req,res){
-  res.send('<div><h2>Results</h2><table><tr><td>Textbook Name</td><td></td></tr></table><h2>List of textbooks for sale</h2><ul></ul></div>');
+  var randomnumber=Math.floor(Math.random()*10)+1; // for demonstration purposes
+  res.send('<div><h2>Results'+randomnumber+'</h2><table><tr><td>Textbook Name</td><td></td></tr></table><h2>List of textbooks for sale</h2><ul></ul></div>');
 });
 
 app.get('/', routes.index);
