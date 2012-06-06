@@ -80,6 +80,14 @@ function validQuery(q) {
 
 // Routes
 
+app.put('/andrew',function(req,res){
+  res.send('<p>'+req.body.andrew_id+'</p>');
+});
+
+app.get('/search',function(req,res){
+  res.send('<div><h2>Results</h2><table><tr><td>Textbook Name</td><td></td></tr></table><h2>List of textbooks for sale</h2><ul></ul></div>');
+});
+
 app.get('/', routes.index);
 
 app.post('/suscribe',function(req,res) {

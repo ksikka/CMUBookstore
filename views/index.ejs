@@ -1,42 +1,36 @@
+  <img id = "ajaxloader" style="position:absolute;left:800px;"src = "/images/ajax-loader.gif" />
   <h1>The Unofficial CMU Textbook Exchange</h1>
 
-  <div>
+  <div id="andrew">
     <h1>Enter your andrew-id:</h1>
-    <form method="POST" type="submit" action="/auth">
+    <form method="PUT" action="/andrew">
       <input type="text" name="andrew_id" />
       <button type="submit">Enter</button>
     </form>
   </div>
 
-  <div>
+  <div id="sell">
     <h1>Sell any textbooks you have:</h1>
     <p>Start typing into any of the fields and click "Add" next to the textbooks you want to sell.</p>
 
     <h2>Search</h2>
-    <table>
-      <tr>
-        <td>Course #</td>  <td>Course Name</td>  <td>Textbook Name</td>
-      </tr>
-      <tr>
-        <td><input type="text" name="course_number" /></td>
-        <td><input type="text" name="course_name" /></td>
-        <td><input type="text" name="textbook_name" /></td>
-      </tr>
-    </table>
+    <form method="GET" action="/search">
+      <table>
+        <tr>
+          <td>Course #</td>  <td>Course Name</td>  <td>Textbook Name</td>
+        </tr>
+        <tr>
+          <td><input type="text" name="course_number" /></td>
+          <td><input type="text" name="course_name" /></td>
+          <td><input type="text" name="textbook_name" /></td>
+        </tr>
+      </table>
+      <button type="submit" style="display:none">Enter</button>
+    </form>
 
-    <h2>Results</h2>
-    <table>
-    <tr>
-      <td>Textbook Name</td><td></td>
-    </tr>
-    </table>
+      </div>
 
-    <h2>List of textbooks for sale</h2>
-    <ul>
-    </ul>
-  </div>
-
-<div>
+<div id="buy">
     <h1>Buy textbooks:</h1>
     <p>Start typing into any of the fields and click "Add" next to the textbooks you want to buy.</p>
 
