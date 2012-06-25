@@ -1,5 +1,22 @@
-<% if(docs.length == 0) { %> None <% } %>
-<% for(var i = 0; i < docs.length; i++) { %>
-  <p><%= docs[i].course_number %></p>
-<% } %>
-
+<div>
+  <% if(books.length == 0) { %> 
+    No books match this query. Make your query simpler. 
+  <% } else { %>
+    <% for(var i = 0; i < books.length; i++) { %>
+      <div>
+        <a href="#">Add</a>
+        <div>
+          <% for(var j = 0; j < books[i].course_ids.length; j++) { %>
+            <% var course = course_dictionary[books[i].course_ids[j]]; %>
+            <% if(course) { %>
+              <%= course._id %> - <%= course.name %>
+            <% } %>
+          <% } %>
+        </div>
+        <div>
+          <%= books[i].title %> by <%= books[i].author %>
+        </div>
+      </div>
+    <% } %>
+  <% } %>
+</div>

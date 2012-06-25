@@ -30,9 +30,9 @@ $('document').ready(function(){
     /* The Bindings */
   $('#andrew form').submit(function(){return ajaxify(this,false);});
 
-  $('#sell form').keydown(function(){return ajaxify(this,true);});
+  $('#sell form').keyup(function(){return ajaxify(this,true);});
 
-  $('#buy form').keydown(function(){return ajaxify(this,true);});
+  $('#buy form').keyup(function(){return ajaxify(this,true);});
 
 
 });
