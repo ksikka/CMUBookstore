@@ -32,7 +32,8 @@ app.configure('production', function(){
 
 // Importing models
 var book = require('./book')
-  , course = require('./course');
+  , course = require('./course')
+  , user = require('./user');
 
 // Search
 
@@ -98,8 +99,32 @@ var search = function(query,callback) {
 
 app.get('/', routes.index);
 
-app.put('/andrew',function(req,res){
-  res.send('<p>Received '+req.body.andrew_id+'</p>');
+app.post('/andrew',function(req,res){
+  console.log('Received '+req.body.andrew_id);
+  andrew_id = req.body.andrew_id;
+  // will want to do validations on the andrew_id
+  andrew_id = andrew_id.toLowerCase();
+  andrew_id = trim(andrew_id);
+  user.User.findOne({"andrew_id":andrew_id}).run(function(err,doc){
+    if(doc){
+      console.log("last_login: "+doc.last_login);
+      doc.last_login = new Date();
+      console.log("last_login: "+doc.last_login);
+      doc.save(function(err){
+        if(err)
+          console.log("Error " + err);
+        res.send("<p>Found you!</p>");
+      });
+    }
+    else{
+      user.User.create( { "andrew_id":andrew_id
+                       , "created_at":new Date()
+                       , "last_login":new Date() }
+          , function() {
+              res.send("Didn't find you, so account was created.");
+            });
+    }
+  });
 });
 
 app.get('/search',function(req,res){
