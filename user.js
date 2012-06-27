@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   _id:Schema.ObjectId,
-  andrew_id:String,
+  andrew_id: {type:String},
   buying_ids: [Number],
   selling_ids:[Number],
   created_at:Date,

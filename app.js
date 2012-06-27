@@ -127,6 +127,31 @@ app.post('/andrew',function(req,res){
   });
 });
 
+app.post('/books/:book_id/buy',function(req,res){
+  andrew_id = "ksikka"; //normally you'd get the user_id from session
+  //get book_id from URL
+  if(ksikka is not authenticated) {
+    res.send("Not authenticated");
+  } else {
+    book.Book.findOne({"_id":book_id}).run(function(err,doc){
+      if(!doc) {
+        res.send("Not a valid book");
+      } else {
+        user.User.findOne({"andrew_id":andrew_id}).run(function(err,site_user){
+          if(site_user.buying_ids.contains(book_id)) {
+            res.send("You already have this book on your buy list.");
+          } else {
+            site_user.buying_ids.push(book_id);
+            site_user.save(function(err){
+              res.send("Added to purchase list.");
+            });
+          }
+        });
+      }
+    });
+  }
+});
+
 app.get('/search',function(req,res){
   search(req.query,
          function(err,docs){
