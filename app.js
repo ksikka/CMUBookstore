@@ -36,6 +36,7 @@ app.configure('production', function(){
 
 // Importing controllers
 var search = require('./controllers/search');
+var auth = require('./controllers/auth');
 
 var user = require('./models/user');
 var trim = require('./utils').trim;
@@ -43,40 +44,9 @@ var trim = require('./utils').trim;
 
 app.get('/', routes.index);
 
-app.all('/log_out',function(req,res){
-  req.session.destroy(function(){
-    console.log(req.session);
-    res.send("done");
-  });
-});
+app.all('/log_out',auth.logout);
 
-app.post('/andrew',function(req,res){
-  var andrew_id = req.body.andrew_id;
-  console.log('Received '+req.body.andrew_id);
-  // will want to do validations on the andrew_id
-  andrew_id = trim(andrew_id.toLowerCase());
-  user.User.findOne({"andrew_id":andrew_id}).run(function(err,doc){
-    if(doc){
-      doc.last_login = new Date();
-      doc.save(function(err){
-        if(err)
-          console.log("Error " + err);
-        req.session.user = doc;
-        req.session.save(function() {
-          res.send("<p>Found you!</p>");
-        });
-      });
-    }
-    else{
-      /*user.User.create( { "andrew_id":andrew_id
-                       , "created_at":new Date()
-                       , "last_login":new Date() }
-          , function() {*/
-              res.send("<p>Didn't find you...</p>");
-           /* });*/
-    }
-  });
-});
+app.post('/andrew',auth.login);
 /*
 app.post('/books/:book_id/buy',function(req,res){
   andrew_id = "ksikka"; //normally you'd get the user_id from session
@@ -103,7 +73,7 @@ app.post('/books/:book_id/buy',function(req,res){
   }
 });
 */
-app.get('/search',search.search);
+app.get('/search',auth.requiresAuth,search.search);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
