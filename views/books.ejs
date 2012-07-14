@@ -4,7 +4,7 @@
   <% } else { %>
     <% for(var i = 0; i < books.length; i++) { %>
       <div>
-        <a href="#">Add</a>
+        <a href="#" book_id="<%= books[i]._id %>">Add</a>
         <div>
           <% for(var j = 0; j < books[i].course_ids.length; j++) { %>
             <% var course = course_dictionary[books[i].course_ids[j]]; %>

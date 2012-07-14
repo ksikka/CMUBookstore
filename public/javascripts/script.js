@@ -8,19 +8,22 @@ $('document').ready(function(){
 
   /* Hide the ajax-loader image */
   $.ajaxSetup({
-    error: function(a,b,c) { console.log(a); console.log(b); console.log(c); alert("Error: See logs"); },
+    error: function(a,b,c) { console.log(a); console.log(b); console.log(c); alert('Error: See logs'); },
     beforeSend: function(){$('#ajaxloader').show()},
     complete: function(){$('#ajaxloader').hide()}
   });
 
+  var bindAll;
+
   var ajaxify = function(self,ret){
     $.ajax({
-        type: $(self).attr("method"),
-        url: $(self).attr("action"),
+        type: $(self).attr('method'),
+        url: $(self).attr('action'),
         data: $(self).serialize(),
         success: function(d){
           $(self).next().remove();
           $(self).after(d);
+          bindAll();
         },
         dataType: 'html'
     });
@@ -28,11 +31,22 @@ $('document').ready(function(){
   }
 
     /* The Bindings */
-  $('#andrew form').submit(function(){return ajaxify(this,false);});
+  var bindAll = function() {
+    $('#andrew form').submit(function(){return ajaxify(this,false);});
+    $('#sell form, #buy form').keyup(function(){return ajaxify(this,true);});
+    /* Ajax PUT and DELETE of (buying|selling) books */
+    $('#sell a').on("click",function(){
+      alert("hi");
+      $.ajax({
+        type: 'PUT',
+        url: '/user/books/selling/add',
+        data: $(self).attr('book_id'),
+        success: function(d){
+          alert(d);
+        }
+      });
+    });
 
-  $('#sell form').keyup(function(){return ajaxify(this,true);});
-
-  $('#buy form').keyup(function(){return ajaxify(this,true);});
-
-
+  }
+  bindAll();
 });
