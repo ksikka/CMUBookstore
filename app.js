@@ -48,26 +48,33 @@ app.get('/', routes.index);
 app.all('/log_out',auth.logout);
 app.post('/andrew',auth.login);
 
-//app.put('/user/books/buying/');
+// TODO implement these
+//app.del('/user/books/selling/');
 //app.del('/user/books/buying/');
 
-app.put('/user/books/selling/',function(req,res){
+var addToBookList = function(req,res,action){
+  var listName = action+"ing_ids";
   siteUser = req.session.user;
   book_id = parseInt(req.body.book_id);
   book.Book.findOne({"_id":book_id}).run(function(err,doc) {
     if(!doc) {
       res.send("Not a valid book",500);
-    } else if(siteUser['selling_ids'].indexOf(book_id)!=-1) {
-      res.send("You already have this book on your sell list.",409);
+    } else if(siteUser[listName].indexOf(book_id)!=-1) {
+      res.send("You already have this book on your "+action+" list.",409);
     } else {
-      siteUser['selling_ids'].push(book_id);
-      user.User.update({andrew_id:siteUser.andrew_id},{ selling_ids:siteUser['selling_ids'] },function(err){
+      siteUser[listName].push(book_id);
+      javascriptIsAnnoying = {};
+      javascriptIsAnnoying[listName] = siteUser[listName];
+      user.User.update({"andrew_id":siteUser.andrew_id}, javascriptIsAnnoying,function(err){
         if(err) { console.log(err); }
-        else { res.send("Added to purchase list."); }
+        else { res.send("Added to "+action+" list."); }
       });
     }
   });
-});
+}
+
+app.put('/user/books/selling/',function(req,res){addToBookList(req,res,"sell")});
+app.put('/user/books/buying/',function(req,res){addToBookList(req,res,"buy")});
 //app.del('/user/books/selling')
 app.get('/search',auth.requiresAuth,search.search);
 
