@@ -42,37 +42,32 @@ var user = require('./models/user');
 var trim = require('./utils').trim;
 // Routes
 
+var book = require('./models/book');
+
 app.get('/', routes.index);
-
 app.all('/log_out',auth.logout);
-
 app.post('/andrew',auth.login);
-/*
-app.post('/books/:book_id/buy',function(req,res){
-  andrew_id = "ksikka"; //normally you'd get the user_id from session
-  //get book_id from URL
-  if(ksikka is not authenticated) {
-    res.send("Not authenticated");
-  } else {
-    book.Book.findOne({"_id":book_id}).run(function(err,doc){
-      if(!doc) {
-        res.send("Not a valid book");
-      } else {
-        user.User.findOne({"andrew_id":andrew_id}).run(function(err,site_user){
-          if(site_user.buying_ids.contains(book_id)) {
-            res.send("You already have this book on your buy list.");
-          } else {
-            site_user.buying_ids.push(book_id);
-            site_user.save(function(err){
-              res.send("Added to purchase list.");
-            });
-          }
-        });
-      }
-    });
-  }
+
+app.put('/user/books/selling/add',function(req,res){
+  siteUser = req.session.user;
+  console.log(siteUser['buying_ids']);
+  book_id = parseInt(req.body.book_id);
+  console.log(book_id);
+  book.Book.findOne({"_id":book_id}).run(function(err,doc) {
+    if(!doc) {
+      res.send("Not a valid book");
+    } else if(siteUser['selling_ids'].indexOf(book_id)!=-1) {
+      res.send("You already have this book on your sell list.");
+    } else {
+      siteUser['selling_ids'].push(book_id);
+      console.log(siteUser._id);
+      user.User.update({andrew_id:siteUser.andrew_id},{ selling_ids:siteUser['selling_ids'] },function(err){
+        if(err) { console.log(err); }
+        else { res.send("Added to purchase list."); }
+      });
+    }
+  });
 });
-*/
 app.get('/search',auth.requiresAuth,search.search);
 
 app.listen(3000, function(){
