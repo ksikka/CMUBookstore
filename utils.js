@@ -1,7 +1,7 @@
 // Takes in a string, returns an escaped string ready for regex
-// Source : http://stackoverflow.com/questions/6300183/sanitize-string-of-regex-characters-before-regexp-build
+// Source : http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
 function sanitizeForRegex(s) {
-  return s.replace(/[#-.]|[[-^]|[?|{}]/, '\\$&');
+  return s.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
 // Strips a string of trailing whitespace
