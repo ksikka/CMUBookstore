@@ -39,24 +39,20 @@ var search = require('./controllers/search');
 var auth = require('./controllers/auth');
 var books = require('./controllers/books');
 
-var user = require('./models/user');
-var trim = require('./utils').trim;
 // Routes
-
-var book = require('./models/book');
 
 app.get('/', routes.index);
 
 app.post('/andrew',auth.login);
 app.all('/log_out',auth.requiresAuth, auth.logout);
 
+app.get('/search',auth.requiresAuth,search.search);
+
 app.put('/user/books/selling',auth.requiresAuth, books.addBookToSellList);
 app.put('/user/books/buying',auth.requiresAuth, books.addBookToBuyList);
 
 app.del('/user/books/buying',auth.requiresAuth, books.removeBookFromBuyList);
 app.del('/user/books/selling',auth.requiresAuth, books.removeBookFromSellList);
-
-app.get('/search',auth.requiresAuth,search.search);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
