@@ -1,11 +1,13 @@
 <div>
   <% if(books.length == 0) { %> 
-    No books match this query. Make your query simpler. 
+    No books match this query
   <% } else { %>
     <% for(var i = 0; i < books.length; i++) { %>
       <div>
         <% var book_id = books[i]._id; %>
-        <a onclick="$.ajax({type:'PUT',url:'/user/books/selling/',data:'book_id=<%= book_id %>'});" href="#" book_id="<%= book_id %>">Add</a>
+        <a onclick="$.ajax({type:'PUT',url:'/user/books/buying/',data:'book_id=<%= book_id %>'});" href="#!buy" book_id="<%= book_id %>">Buy</a>
+        |
+        <a onclick="$.ajax({type:'PUT',url:'/user/books/selling/',data:'book_id=<%= book_id %>'});" href="#!sell" book_id="<%= book_id %>">Sell</a>
         <div>
           <% for(var j = 0; j < books[i].course_ids.length; j++) { %>
             <% var course = course_dictionary[books[i].course_ids[j]]; %>

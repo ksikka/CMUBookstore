@@ -6,10 +6,13 @@ var user = require("../models/user")
 // logout
 
 exports.logout = function(req,res){
-  user = req.session.andrew_id;
-  req.session.destroy(function(){
-    console.log("Logged out " + user);
-    res.send(true);
+  siteUser = req.session.user;
+  req.session.destroy(function(err){
+    if(err){ console.log(err); }
+    else{
+      console.log("Logged out " + siteUser);
+      res.send(true);
+    }
   });
 }
 

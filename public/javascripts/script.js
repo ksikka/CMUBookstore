@@ -32,6 +32,13 @@ $('document').ready(function(){
   /* The Bindings */
   $('#andrew form').submit(function(){return ajaxify(this,false);});
   $('#sell form, #buy form').keyup(function(){return ajaxify(this,true);});
+  $('a.logout').click(function(){
+    var self = this;
+    $.ajax({
+      type: $(self).attr('method'),
+      url: $(self).attr('action'),
+    });
+  });
 
   /* Ajax PUT and DELETE of (buying|selling) books */
   $('#sell a').on("click",function(){
