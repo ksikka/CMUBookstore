@@ -11,9 +11,6 @@ html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10
 html, button, input, select, textarea { font-family: sans-serif; color: #222; }
 body { margin: 0; font-size: 1em; line-height: 1.4; }
 
-::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
-
 a { color: #00e; }
 a:visited { color: #551a8b; }
 a:hover { color: #06e; }
@@ -82,26 +79,36 @@ header {
   margin:0;
   padding:20px 0 0 100px;
 }
-
   header h1 { margin: 0; }
 
-#main {
+#main { padding: 0px 100px; margin:0 }
+#container {
   width:850px;
   margin:0 auto 0 auto;
+  padding:30px;
 }
 
   /* styles for the splash screen */
-  #main ol.splash {
+  #container ol.splash {
     width: 83%;
-    margin:50px auto 0 auto;
+    margin:50px auto 50px auto;
   }
 
-  #main ol.splash h2 { margin-bottom:10px }
-  #main ol.splash p { margin-top:0; margin-left:20px; }
+    #container ol.splash h2 { margin-bottom:10px }
+    #container ol.splash p { margin-top:0; margin-left:20px; }
+    #container form.splash div { width:300px; margin: 0 auto }
+    #container form.splash button {
+      width:80px;
+      height:30px;
+      margin-left:20px;
+    }
 
 
+header { background-color: #8D231C }
+#main { background-color: #E1E1E1 }
+#container { background-color: #F7F7F7 }
 
-
+header { color: #F7F7F7 }
 
 
 
