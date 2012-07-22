@@ -21,13 +21,15 @@
   </header>
 <div id="main">
   <div id="container">
-    <%- body %>
+    <div id="page">
+      <%- body %>
+    </div>
+    <nav class="clearfix">
+      <a href="#" id="left"><img src="images/nav/left.png" />Go Back</a>
+      <a href="#" id="right"><img src="images/nav/right.png" />Next</a>
+    </nav>
   </div>
 </div>
-  <nav>
-    <a href="#"><img src="images/nav/left.png" /></a>
-    <a href="#"><img src="images/nav/right.png" /></a>
-  </nav>
 <footer>
 </footer>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>

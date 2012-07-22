@@ -75,13 +75,20 @@ td { vertical-align: top; }
 
 /* Layout */
 header {
-  height:100px;
+  position:relative;
+  height:80px;
   margin:0;
   padding:20px 0 0 100px;
+  z-index:2;
 }
   header h1 { margin: 0; }
 
-#main { padding: 0px 100px; margin:0 }
+#main {
+  position:relative;
+  padding: 0px 100px;
+  margin:0;
+  z-index:1
+}
 #container {
   width:850px;
   margin:0 auto 0 auto;
@@ -103,13 +110,47 @@ header {
       margin-left:20px;
     }
 
+#page {margin-bottom:75px;}
 
-header { background-color: #8D231C }
-#main { background-color: #E1E1E1 }
-#container { background-color: #F7F7F7 }
+nav {
+  width:450px;
+  margin: 0 auto;
 
-header { color: #F7F7F7 }
+}
+  nav #left { float:left; }
+  nav #right { float:right; }
 
+footer {
+  height:30px;
+  background-color:black;
+}
+
+/* Colors */
+header {
+  /* Generated from http://www.colorzilla.com/gradient-editor/ */
+  background: #a90329; /* Old browsers */
+  background: -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+  -webkit-box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
+          box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
+  color: #F7F7F7
+}
+
+#main {
+  background-color: #E1E1E1
+}
+
+#container {
+  background-color: #F7F7F7;
+  -webkit-box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
+          box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
+}
 
 
 /* =============================================================================
