@@ -8,7 +8,7 @@ audio:not([controls]) { display: none; }
 [hidden] { display: none; }
 
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+html, button, input, select, textarea { font-family: 'Open sans', sans-serif; color: #222; }
 body { margin: 0; font-size: 1em; line-height: 1.4; }
 
 a { color: #00e; }
@@ -76,12 +76,21 @@ td { vertical-align: top; }
 /* Layout */
 header {
   position:relative;
-  height:80px;
+  height:58px;
   margin:0;
-  padding:20px 0 0 100px;
+  padding:0 0 0 100px;
   z-index:2;
 }
-  header h1 { margin: 0; }
+  header h1 {
+    margin: 0;
+    position:relative;
+    top:12px;
+    font-style:italic
+  }
+  header #logo img {
+    zoom:.3;
+    margin-right:20px
+  }
 
 #main {
   position:relative;
@@ -92,16 +101,19 @@ header {
 #container {
   width:850px;
   margin:0 auto 0 auto;
-  padding:30px;
+  padding: 1px 30px;
 }
 
   /* styles for the splash screen */
   #container ol.splash {
     width: 83%;
-    margin:50px auto 50px auto;
+    margin:50px 0 50px 0;
   }
+  #container .splash li {
+    margin-bottom:40px;
+  }
+  #container .splash h2 { margin-bottom:10px; }
 
-    #container ol.splash h2 { margin-bottom:10px }
     #container ol.splash p { margin-top:0; margin-left:20px; }
     #container form.splash div { width:300px; margin: 0 auto }
     #container form.splash button {
@@ -137,20 +149,28 @@ header {
   background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
 
-  -webkit-box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
-          box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
+  -webkit-box-shadow:  0 0 15px 2px rgba(0, 0, 0, .35);
+          box-shadow:  0 0 15px 2px rgba(0, 0, 0, .35);
   color: #F7F7F7
 }
 
 #main {
-  background-color: #E1E1E1
+  background-image: url("/images/dark denim.png");
 }
 
 #container {
-  background-color: #F7F7F7;
+  background-color: #F1F1F1;
   -webkit-box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
           box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
 }
+
+/* Typography */
+h1, h2, h3 { font-family: "Droid serif", serif; }
+header h1 { font-size: 16pt; }
+
+  h1.splash {
+    text-align:center;
+  }
 
 
 /* =============================================================================
