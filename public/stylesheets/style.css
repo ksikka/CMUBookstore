@@ -108,6 +108,27 @@ header {
   height:250px;
 }
 
+#logo { font-size: 18pt; }
+#auth-details { float: right }
+.panel { overflow: scroll }
+#search-wrapper * {border: black solid 1px;}
+#personal-list-wrapper * {border: black solid 1px;}
+#search-nav { padding: 10px; }
+.listing {
+  margin:2px;
+}
+#search-results .listing {
+  /*width: 630px;*/
+  height: 130px;
+  padding:20px 25px;
+}
+#personal-list-wrapper .listing {
+  height: 50px;
+  padding: 12px;
+}
+
+
+/*********/
 
 /* =============================================================================
    Media Queries
