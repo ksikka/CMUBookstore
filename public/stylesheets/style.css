@@ -73,104 +73,40 @@ td { vertical-align: top; }
 /* apply a natural box layout model to all elements */
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-/* Layout */
-header {
-  position:relative;
-  height:58px;
-  margin:0;
-  padding:0 0 0 100px;
-  z-index:2;
-}
-  header h1 {
-    margin: 0;
-    position:relative;
-    top:12px;
-    font-style:italic
-  }
-  header #logo img {
-    zoom:.3;
-    margin-right:20px
-  }
-
-#main {
-  position:relative;
-  padding: 0px 100px;
-  margin:0;
-  z-index:1
-}
 #container {
-  width:850px;
-  margin:0 auto 0 auto;
-  padding: 1px 30px;
-}
-
-  /* styles for the splash screen */
-  #container ol.splash {
-    width: 83%;
-    margin:50px 0 50px 0;
-  }
-  #container .splash li {
-    margin-bottom:40px;
-  }
-  #container .splash h2 { margin-bottom:10px; }
-
-    #container ol.splash p { margin-top:0; margin-left:20px; }
-    #container form.splash div { width:300px; margin: 0 auto }
-    #container form.splash button {
-      width:80px;
-      height:30px;
-      margin-left:20px;
-    }
-
-#page {margin-bottom:75px;}
-
-nav {
-  width:450px;
+  width: 960px;
   margin: 0 auto;
-
-}
-  nav #left { float:left; }
-  nav #right { float:right; }
-
-footer {
-  height:30px;
-  background-color:black;
+  padding: 0;
 }
 
-/* Colors */
 header {
-  /* Generated from http://www.colorzilla.com/gradient-editor/ */
-  background: #a90329; /* Old browsers */
-  background: -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
-  background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
-
-  -webkit-box-shadow:  0 0 15px 2px rgba(0, 0, 0, .35);
-          box-shadow:  0 0 15px 2px rgba(0, 0, 0, .35);
-  color: #F7F7F7
+  height: 90px;
+  margin: 0;
+  padding: 25px 0;
 }
 
-#main {
-  background-image: url("/images/dark denim.png");
+#search-wrapper {
+  width: 663px;
+  margin: 0 25px 0 0;
+  float: left;
 }
 
-#container {
-  background-color: #F1F1F1;
-  -webkit-box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
-          box-shadow:  0 0 15px 4px rgba(24, 24, 24, .3);
+#personal-list-wrapper {
+  width: 268px;
+  float: left;
 }
 
-/* Typography */
-h1, h2, h3 { font-family: "Droid serif", serif; }
-header h1 { font-size: 16pt; }
+#search-nav {
+  height: 53px;
+}
 
-  h1.splash {
-    text-align:center;
-  }
+#search-results {
+  height: 490px;
+}
+
+#buy-list, #sell-list {
+  height:250px;
+}
 
 
 /* =============================================================================

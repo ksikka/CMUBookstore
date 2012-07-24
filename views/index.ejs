@@ -1,4 +1,31 @@
-  <img id = "ajaxloader" style="position:absolute;left:800px;"src = "/images/ajax-loader.gif" />
+<div id="search-wrapper">
+  Search for textbooks. (hint: drag and drop to the approriate list)
+  <div id="search" class="panel">
+    <div id="search-nav">
+      <form method="GET" action="/search">
+        <input type="text" name="course_number" />
+        <input type="text" name="course_name" />
+        <input type="text" name="textbook_name" />
+        <button type="submit" style="display:none">Enter</button>
+      </form>
+    </div>
+    <div id="search-results">
+      <div class="listing">This is a sample result</div>
+    </div>
+  </div>
+</div>
+
+<div id="personal-list-wrapper">
+  Buy list:
+  <div id="buy-list" class="panel">
+    <div class="listing">This is a sample listing</div>
+  </div>
+  Sell list:
+  <div id="sell-list" class="panel"></div>
+</div>
+
+<!--
+<img id = "ajaxloader" style="position:absolute;left:800px;"src = "/images/ajax-loader.gif" />
   <a href="#" method="GET" class="logout" action="/log_out">Log Out</a>
 
   <div id="andrew">
@@ -29,3 +56,4 @@
     </form>
 
       </div>
+      -->
