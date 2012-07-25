@@ -1,9 +1,8 @@
-<div>
   <% if(books.length == 0) { %> 
     No books match this query
   <% } else { %>
     <% for(var i = 0; i < books.length; i++) { %>
-      <div>
+      <div class="listing">
         <% var book_id = books[i]._id; %>
         <a onclick="$.ajax({type:'PUT',url:'/user/books/buying/',data:'book_id=<%= book_id %>'});" href="#!buy" book_id="<%= book_id %>">Buy</a>
         |
@@ -22,4 +21,3 @@
       </div>
     <% } %>
   <% } %>
-</div>

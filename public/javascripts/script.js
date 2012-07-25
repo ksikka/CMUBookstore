@@ -1,7 +1,45 @@
+/********************************************
+ * Def'ns:
+ * 1. A textbook is an isbn, as well as the html
+ * which renders it on the search result page.
+ * 2. A query is a course_number, course_name,
+ * and textbook_name.
+ *
+ * When a user types in the search fields, a
+ * function gets the data from either a local
+ * cache or by requesting from the server. The
+ * input is a "query" and the output is a list
+ * of "textbooks", where query and textbook 
+ * are defined above.
+
+
+/* State Variables */
+
+var query = {};
+var searchResults = [];
+var buying = [];
+var selling = [];
+
+function getSearchResults(q,callback) {
+  $.ajax({
+    type: 'GET',
+    url: '/search',
+    data: q,
+    success: callback,
+    dataType: 'html'
+  });
+}
+
+function fixSearchBindings() {
+  // TODO implement
+}
+
+function renderSearchResults(result) {
+  $('#search-results').html(result);
+  fixSearchBindings();
+}
 
 $('document').ready(function(){
-
-  /* A few initialization things */
 
   /* Hide the ajax-loader image */
   $('#ajaxloader').hide();
@@ -11,46 +49,16 @@ $('document').ready(function(){
     error: function(a,b,c) { console.log(a); console.log(b); console.log(c); alert('Error: See logs'); },
     beforeSend: function(){$('#ajaxloader').show()},
     complete: function(){$('#ajaxloader').hide()},
-      });
-
-  var coolAjaxUpdate = function(e,d) {
-    $(e).next().remove();
-    $(e).after(d);
-  };
-
-  var ajaxify = function(self,ret){
-    $.ajax({
-      type: $(self).attr('method'),
-      url: $(self).attr('action'),
-      data: $(self).serialize(),
-      success: function(d) { coolAjaxUpdate(self,d); },
-      dataType: 'html'
-    });
-    return ret;
-  };
-
-  /* The Bindings */
-  $('#andrew form').submit(function(){return ajaxify(this,false);});
-  $('#sell form, #buy form').keyup(function(){return ajaxify(this,true);});
-  $('a.logout').click(function(){
-    var self = this;
-    $.ajax({
-      type: $(self).attr('method'),
-      url: $(self).attr('action'),
-    });
   });
 
-  /* Ajax PUT and DELETE of (buying|selling) books */
-  $('#sell a').on("click",function(){
-    alert("hi");
-    $.ajax({
-      type: 'PUT',
-      url: '/user/books/selling/add',
-      data: $(self).attr('book_id'),
-      success: function(d){
-        alert(d);
-      }
-    });
+  $('#search-nav form').keyup(function(){
+    // TODO implement rate-limiting and local caching
+    // for now, update state every single time.
+    q = $('form').serialize();
+    getSearchResults(q
+      , renderSearchResults);
   });
+
+  $.post("/andrew",{andrew_id:"ksikka"});
 
 });
