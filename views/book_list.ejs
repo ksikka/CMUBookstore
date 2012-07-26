@@ -1,0 +1,6 @@
+<% for(var i = 0; i < list.length; i++) { %>
+  <div class="listing">
+    <%= list[i] %>
+    <button onclick="removeFromList(this,'<%= action %>')" book_id=<%= list[i] %> >Del</button>
+  </div>
+<% } %>
