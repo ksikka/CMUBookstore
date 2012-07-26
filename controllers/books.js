@@ -2,6 +2,26 @@
 var user = require('../models/user'),
     book = require('../models/book');
 
+
+var getBookList = function(req,res,action){
+  var listName = action+"ing_ids";
+  siteUser = req.session.user;
+  user.User.findOne({"andrew_id":siteUser.andrew_id},function(err){
+    if(err) { console.log(err); }
+    else {
+      var updateDict = {};
+      updateDict[listName] = siteUser[listName];
+      res.partial("book_list",{list:updateDict[listName],action:action},function(err,htmlString){
+        console.log(htmlString);
+        res.json({html:htmlString});
+      })
+    }
+  });
+}
+
+exports.getBuyList = function(req,res){getBookList(req,res,"buy")};
+exports.getSellList = function(req,res){getBookList(req,res,"sell")};
+
 var removeFromBookList = function(req,res,action){
   var listName = action+"ing_ids";
   siteUser = req.session.user;

@@ -49,6 +49,9 @@ app.all('/logout',auth.requiresAuth, auth.logout);
 
 app.get('/search',auth.requiresAuth,search.search);
 
+app.get('/user/books/buying',auth.requiresAuth, books.getBuyList);
+app.get('/user/books/selling',auth.requiresAuth, books.getSellList);
+
 app.put('/user/books/selling',auth.requiresAuth, books.addBookToSellList);
 app.put('/user/books/buying',auth.requiresAuth, books.addBookToBuyList);
 

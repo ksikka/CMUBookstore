@@ -25,6 +25,22 @@ var searchResults = [];
 var buying = [];
 var selling = [];
 
+var loggedIn;
+
+function initializeLists() {
+  $.get('/user/books/buying',function(h){
+    $('#buy-list').html(h.html);
+  });
+  $.get('/user/books/selling',function(h){
+    $('#sell-list').html(h.html);
+  });
+}
+
+function clearLists() {
+  $('#buy-list').html("");
+  $('#sell-list').html("");
+}
+
 function getSearchResults(q,callback) {
   $.ajax({
     type: 'GET',
@@ -114,6 +130,8 @@ $('document').ready(function(){
       , renderSearchResults);
   });
 
+  //initialize lists
+  
   // hide all auth things to start with
   $("#auth-details p").hide();
   $('#auth-details form').hide();
@@ -123,8 +141,11 @@ $('document').ready(function(){
     if(r.login){
       $("#auth-details p").show();
       $("#auth-details #user-identifier").text(r.andrew);
+      loggedIn = true;
+      initializeLists();
     }else{
       $('#auth-details form').show();
+      loggedIn = false;
     }
   });
 
@@ -139,6 +160,8 @@ $('document').ready(function(){
                var andrew = res.andrew;
                $("#user-identifier").text( andrew );
                $("#auth-details p").show();
+               loggedIn = true;
+               initializeLists();
              } else {
                alert('Login failed: not a valid andrew id');
              }
@@ -152,7 +175,9 @@ $('document').ready(function(){
       $('#auth-details p').hide();
       $("#auth-details form input").val("");
       $('#auth-details form').show();
-      console.log(d)
+      console.log(d);
+      loggedIn = false;
+      clearLists();
     });
   });
 
