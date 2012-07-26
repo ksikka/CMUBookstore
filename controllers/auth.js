@@ -30,21 +30,28 @@ exports.login = function(req,res){
       doc.save(function(err){
         if(err)
           console.log("Error " + err);
-        req.session.user = doc;
-        req.session.save(function() {
-          res.send("<p>Logged in.</p>");
+          req.session.user = doc;
+          req.session.save(function() {
+          res.send({login:true,andrew:req.session.user.andrew_id});
         });
       });
     }
     else{
-      /*user.User.create( { "andrew_id":andrew_id
-                       , "created_at":new Date()
-                       , "last_login":new Date() }
-          , function() {*/
-              res.send("<p>Not a user's andrew_id in the DB</p>");
-           /* });*/
+      res.send(false);
     }
   });
+}
+
+// auth check for api
+exports.logincheck = function(req,res) {
+  var logged_in = {}
+  if(req.session.user) {
+    logged_in.login = true;
+    logged_in.andrew = req.session.user.andrew_id;
+  } else {
+    logged_in.login = false;
+  }
+  res.send(logged_in);
 }
 
 // auth pre-filter

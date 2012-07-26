@@ -36,9 +36,10 @@ function getSearchResults(q,callback) {
 }
 
 function fixSearchBindings() {
-  // TODO implement
+  // probably not even necessary but whatever. // TODO implement
 }
 
+// also probably not necessary
 function renderSearchResults(result) {
   $('#search-results').html(result.html);
   fixSearchBindings();
@@ -91,6 +92,8 @@ function sell(e) {
       }
     })
 }
+
+
 $('document').ready(function(){
 
   /* Hide the ajax-loader image */
@@ -111,6 +114,48 @@ $('document').ready(function(){
       , renderSearchResults);
   });
 
-  $.post("/andrew",{andrew_id:"ksikka"});
+  // hide all auth things to start with
+  $("#auth-details p").hide();
+  $('#auth-details form').hide();
+
+  // login check to display the correct auth prompt
+  $.get("/logincheck",function(r){
+    if(r.login){
+      $("#auth-details p").show();
+      $("#auth-details #user-identifier").text(r.andrew);
+    }else{
+      $('#auth-details form').show();
+    }
+  });
+
+  // login function
+  $('#auth-details form').submit(function(){
+    var self = this;
+    $.post('/andrew',
+           $(this).serialize(),
+           function(res){
+             if (res.login) {
+               $(self).hide();
+               var andrew = res.andrew;
+               $("#user-identifier").text( andrew );
+               $("#auth-details p").show();
+             } else {
+               alert('Login failed: not a valid andrew id');
+             }
+           });
+    return false;
+  });
+
+  // logout function
+  $('#logout').click(function(){
+    $.get("/logout",function(d){
+      $('#auth-details p').hide();
+      $("#auth-details form input").val("");
+      $('#auth-details form').show();
+      console.log(d)
+    });
+  });
+
+
 
 });

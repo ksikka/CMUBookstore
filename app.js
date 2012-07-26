@@ -44,7 +44,8 @@ var books = require('./controllers/books');
 app.get('/', routes.index);
 
 app.post('/andrew',auth.login);
-app.all('/log_out',auth.requiresAuth, auth.logout);
+app.all('/logincheck',auth.logincheck);
+app.all('/logout',auth.requiresAuth, auth.logout);
 
 app.get('/search',auth.requiresAuth,search.search);
 

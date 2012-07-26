@@ -17,10 +17,16 @@
 	<script src="/javascripts/libs/modernizr-2.5.3.min.js"></script>
 </head>
 <body>
+  <img id="ajaxloader" src="/images/ajax-loader.gif" />
   <div id="container">
     <header>
-      <span id="logo">Tartan Textbooks</span>
-      <span id="auth-details"><img id="ajaxloader" src="/images/ajax-loader.gif" />Logged in as Karan Sikka | <a href="#">Log out</a></span>
+    <span id="logo">Tartan Textbooks</span>
+    <span id="auth-details">
+      <form>
+        <label>Andrew ID</label><input type="text" name="andrew_id"/><button class="invisible" type="submit"></button>
+      </form>
+      <p>Logged in as <span id="user-identifier"></span> | <a href="#" id="logout">Log out</a><p>
+    </span>
     </header>
     <div id="main" class="clearfix">
       <%- body %>
