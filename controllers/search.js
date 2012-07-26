@@ -33,8 +33,8 @@ var search = function(query,callback) {
   query.textbook_name = utils.sanitizeForRegex(query.textbook_name);
   if(blankQuery(query)) { return callback(null,{"books":[]}); };
   course.Course.find({})
-    .regex('_id', new RegExp("^" + query.course_number + ".*","i")) //prefix match
-    .regex('name', new RegExp(".*" + query.course_name + ".*","i"))
+    .regex('_id', new RegExp("^" + query.course_number,"i")) //prefix match
+    .regex('name', new RegExp(query.course_name,"i"))
     .exec(function(err,courses){
       if(err) { console.log("There's an error, with the query "+query); }
       else {
@@ -59,7 +59,9 @@ var search = function(query,callback) {
 exports.search = function(req,res){
   search(req.query,
          function(err,docs){
-           res.partial("books",docs)
+           res.partial("books",docs,function(err,htmlstring){
+             res.json({html:htmlstring})
+           })
          });
   //log the input
 }

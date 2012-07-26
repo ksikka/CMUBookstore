@@ -9,12 +9,17 @@
  * function gets the data from either a local
  * cache or by requesting from the server. The
  * input is a "query" and the output is a list
- * of "textbooks", where query and textbook 
- * are defined above.
-
+ * of app_ids and the html to render the results,
+ *
+ * The search-result html has links to buy and sell,
+ * which execute the buy and sell functions. Eg,
+ * when the buy function is executed, the book_id
+ * is added to the buy list, a put request is made to
+ * the server, the search-results are modified, 
+ * and the buylist ui is rendered.
+ * /
 
 /* State Variables */
-
 var query = {};
 var searchResults = [];
 var buying = [];
@@ -26,7 +31,7 @@ function getSearchResults(q,callback) {
     url: '/search',
     data: q,
     success: callback,
-    dataType: 'html'
+    dataType: 'json'
   });
 }
 
@@ -35,10 +40,57 @@ function fixSearchBindings() {
 }
 
 function renderSearchResults(result) {
-  $('#search-results').html(result);
+  $('#search-results').html(result.html);
   fixSearchBindings();
 }
 
+function removeFromList(e,action) {
+  var book_id = $(e).attr('book_id');
+  $.ajax({
+      type: 'DELETE',
+      url: '/user/books/'+action+'ing',
+      data: {book_id:book_id},
+      success:function(h){
+        console.log(h.html);
+        $('#'+action+'-list').html(h.html);
+        console.log('remove from buy list: '+book_id)
+      }
+    })
+}
+
+function buy(e) {
+  var book_id = $(e).attr('book_id');
+    $.ajax({
+      type: "PUT",
+      url: "/user/books/buying",
+      data: {book_id:book_id},
+      success:function(h){
+        buying.push(book_id);
+        $(e).addClass('buying');
+        // get html for buy list
+        // render html in the buy list.
+        $('#buy-list').html(h.html);
+        console.log("added to buy list: "+book_id)
+      }
+    })
+}
+
+function sell(e) {
+  var book_id = $(e).attr('book_id');
+    $.ajax({
+      type: "PUT",
+      url: "/user/books/selling",
+      data: {book_id:book_id},
+      success:function(h){
+        selling.push(book_id);
+        $(e).addClass('selling');
+        // get html for buy list
+        // render html in the buy list.
+        $('#sell-list').html(h.html);
+        console.log("added to sell list: "+book_id)
+      }
+    })
+}
 $('document').ready(function(){
 
   /* Hide the ajax-loader image */

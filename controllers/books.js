@@ -18,7 +18,12 @@ var removeFromBookList = function(req,res,action){
       updateDict[listName] = siteUser[listName];
       user.User.update({"andrew_id":siteUser.andrew_id}, updateDict,function(err){
         if(err) { console.log(err); }
-        else { res.send("Removed from "+action+" list."); }
+        else {
+          res.partial("book_list",{list:updateDict[listName],action:action},function(err,htmlString){
+            console.log(htmlString);
+            res.json({html:htmlString});
+          })
+        }
       });
     }
   });
@@ -39,11 +44,21 @@ var addToBookList = function(req,res,action){
       updateDict[listName] = siteUser[listName];
       user.User.update({"andrew_id":siteUser.andrew_id}, updateDict,function(err){
         if(err) { console.log(err); }
-        else { res.send("Added to "+action+" list."); }
+        else {
+          res.partial("book_list",{
+                                    list:updateDict[listName],
+                                    action:action
+                                   },function(err,htmlString){
+                                     console.log(htmlString);
+            res.json({html:htmlString});
+          })
+        }
       });
     }
   });
 }
+
+var getBuyListHTML = function(){}
 
 exports.addBookToBuyList = function(req,res) {
   addToBookList(req,res,"buy");
