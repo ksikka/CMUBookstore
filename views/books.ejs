@@ -3,21 +3,24 @@
 <% } else { %>
   <% for(var i = 0; i < books.length; i++) { %>
     <div class="listing">
-      <% var book_id = books[i]._id; %>
+      <% var book = books[i] %>
+      <% var book_id = book._id; %>
 
       <div>
-        <%= books[i].title %> by <%= books[i].author %>
+        <span class="title"><%= book.title %></span>
+        <span class="author">by <%= book.author %></span>
       </div>
 
-      <div>
-        Required for 
-        <% for(var j = 0; j < books[i].course_ids.length; j++) { %>
-          <% var course = course_dictionary[books[i].course_ids[j]]; %>
-          <% if(course) { %>
-            <%= course._id %> - <%= course.name %>,&nbsp;
-          <% } %>
-        <% } %>
-      </div>
+        <% var courseStrings = []; %>
+        <% for(var j = 0; j < books[i].course_ids.length; j++) { 
+             var course = course_dictionary[books[i].course_ids[j]];
+             if(course) { 
+               courseStrings.push(course._id + ': ' + course.name);
+             }
+           } 
+           if(courseStrings.length > 0) { %>
+           <div>Required for <%= courseStrings.join(', ') %></div>
+       <%  } %>
 
       <a onclick="buy(this);" href="#!buy" book_id="<%= book_id %>">Buy</a>
       |

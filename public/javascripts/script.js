@@ -70,7 +70,7 @@ function removeFromList(e,action) {
       success:function(h){
         console.log(h.html);
         $('#'+action+'-list').html(h.html);
-        console.log('remove from buy list: '+book_id)
+        console.log('remove from '+action+' list: '+book_id)
       }
     })
 }

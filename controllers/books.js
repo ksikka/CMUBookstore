@@ -1,20 +1,20 @@
-//import all the typical shit//
 var user = require('../models/user'),
     book = require('../models/book');
 
 
 var getBookList = function(req,res,action){
   var listName = action+"ing_ids";
-  siteUser = req.session.user;
-  user.User.findOne({"andrew_id":siteUser.andrew_id},function(err){
+  userFromSession = req.session.user;
+  user.User.findOne({"andrew_id":userFromSession.andrew_id},function(err,siteUser){
     if(err) { console.log(err); }
     else {
-      var updateDict = {};
-      updateDict[listName] = siteUser[listName];
-      res.partial("book_list",{list:updateDict[listName],action:action},function(err,htmlString){
-        console.log(htmlString);
-        res.json({html:htmlString});
-      })
+      listOfIds = siteUser[listName];
+      book.Book.find({"_id":{"$in":listOfIds}}).run(function(err,books){
+        if(err){console.log(err);} else{
+        res.partial("book_list",{list:books,action:action},function(err,htmlString){
+          res.json({html:htmlString});
+        });}
+      });
     }
   });
 }
@@ -39,10 +39,7 @@ var removeFromBookList = function(req,res,action){
       user.User.update({"andrew_id":siteUser.andrew_id}, updateDict,function(err){
         if(err) { console.log(err); }
         else {
-          res.partial("book_list",{list:updateDict[listName],action:action},function(err,htmlString){
-            console.log(htmlString);
-            res.json({html:htmlString});
-          })
+          getBookList(req,res,action);
         }
       });
     }
@@ -65,13 +62,8 @@ var addToBookList = function(req,res,action){
       user.User.update({"andrew_id":siteUser.andrew_id}, updateDict,function(err){
         if(err) { console.log(err); }
         else {
-          res.partial("book_list",{
-                                    list:updateDict[listName],
-                                    action:action
-                                   },function(err,htmlString){
-                                     console.log(htmlString);
-            res.json({html:htmlString});
-          })
+          console.log("about to call this allmighty function")
+          getBookList(req,res,action);
         }
       });
     }
