@@ -2,7 +2,7 @@ var trim = require("../utils").trim;
 var user = require("../models/user")
   , course = require("../models/course")
   , book = require("../models/book");
-var email = require("./email.js")
+var email = require("../email.js")
 var EMAIL_LIMIT = 4;
 /* TODO: refactor some of this code so that it uses "ifAuthElse" */
 
