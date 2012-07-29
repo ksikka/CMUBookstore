@@ -2,7 +2,8 @@ var trim = require("../utils").trim;
 var user = require("../models/user")
   , course = require("../models/course")
   , book = require("../models/book");
-
+var email = require("./email.js")
+var EMAIL_LIMIT = 4;
 /* TODO: refactor some of this code so that it uses "ifAuthElse" */
 
 
@@ -29,15 +30,32 @@ exports.login = function(req,res){
   andrew_id = trim(andrew_id.toLowerCase());
   user.User.findOne({"andrew_id":andrew_id}).run(function(err,doc){
     if(doc){
-      doc.last_login = new Date();
-      doc.save(function(err){
-        if(err)
-          console.log("Error " + err);
-          req.session.user = doc;
-          req.session.save(function() {
-          res.send({login:true,andrew:req.session.user.andrew_id});
+      if(!doc.created_at) {
+        //person has not yet initialized account, send them a confirmation email
+        if(doc.email_count <= EMAIL_LIMIT) {
+          email.send(/* TODO fill this out sometime*/);
+          doc.email_count++;
+          doc.save(function(err){
+            if(err){console.log(err); res.send("error, see logs",500); }
+            else {
+              res.send(EMAIL_LIMIT-email_count);
+            }
+          });
+        } else {
+          res.send("too many emails sent. sorry.");
+        }
+      } else {
+        //account was already initialized, business as usual
+        doc.last_login = new Date();
+        doc.save(function(err){
+          if(err)
+            console.log("Error " + err);
+            req.session.user = doc;
+            req.session.save(function() {
+            res.send({login:true,andrew:req.session.user.andrew_id});
+          });
         });
-      });
+      }
     }
     else{
       res.send(false);

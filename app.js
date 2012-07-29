@@ -66,7 +66,12 @@ app.all('/confirm/:andrew_id/:account_id',function(req,res){
     else {
       if(doc) {
         //success
-        res.render('user_settings.js',{user:doc})
+        if(!doc.created_at) {
+          // give the user a chance to fill out all their settings
+          res.render('user_settings.js',{user:doc});
+        } else {
+          res.send("Account already created for this user. proceed to <a href='/'>the site</a>");
+        }
       } else {
         //wrong conf code, log this event.
         console.log("failed attempt to guess conf code from email.");
