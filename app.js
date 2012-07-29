@@ -68,7 +68,7 @@ app.all('/confirm/:andrew_id/:account_id',function(req,res){
         //success
         if(!doc.created_at) {
           // give the user a chance to fill out all their settings
-          res.render('user_settings.js',{user:doc});
+          res.render('user_settings',{user:doc});
         } else {
           res.send("Account already created for this user. proceed to <a href='/'>the site</a>");
         }
