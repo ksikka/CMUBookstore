@@ -1,13 +1,7 @@
-<h1>Settings for <%= doc.name %></h1>
-<form>
-  <label>Username<h3><%= doc.andrew_id %></h3></label>
-  <label>Password<input type="password" /></label>
-  <label>Schedule URL<input type="text" /><button type="button">Add</button></label>
-  <ul>
-    <li>Url would be here</li>
-  </ul>
-  <ul>
-    <li>Book would be here</li>
-  <ul>
+<h1>Set a password</h1>
+<form method="POST" action="/user">
+  <label>Username<h3 style="display:inline"><%= user.andrew_id %></h3></label><br />
+  <input type="hidden" value="<%= user._id.toString() %>" name="emailconf" />
+  <label>Password<input type="password" name="password"/></label><br />
   <button type="submit">Continue</button>
 </form>

@@ -38,14 +38,15 @@ app.configure('production', function(){
 var search = require('./controllers/search');
 var auth = require('./controllers/auth');
 var books = require('./controllers/books');
+//only for dev purposes
 var schedplus = require('./scheduleplus.js');
-
+var user = require('./models/user.js');
 // Routes
 app.post('/extract',function(req,res){
     var surl = req.body.surl;
     console.log(surl);
     schedplus.scrape(surl,res);
-    });
+});
 
 //app.get('/', routes.index);
 
@@ -62,13 +63,16 @@ app.all('/confirm/:andrew_id/:account_id',function(req,res){
   var andrewId = req.params.andrew_id;
   // see if it's in the db
   user.User.findOne({_id:accountId,andrew_id:andrewId}).run(function(err,doc){
-    if(err) {console.log(err);}
+    if(err) {
+      console.log(err);
+      res.send("404: not a real page",404);
+    }
     else {
       if(doc) {
         //success
         if(!doc.created_at) {
           // give the user a chance to fill out all their settings
-          res.render('user_settings',{user:doc});
+          res.render('user_settings',{user:doc, title: "Create a new account"});
         } else {
           res.send("Account already created for this user. proceed to <a href='/'>the site</a>");
         }
@@ -80,6 +84,27 @@ app.all('/confirm/:andrew_id/:account_id',function(req,res){
       }
     }
   });
+});
+app.post('/user',function(req,res){
+  id = req.body.emailconf;
+  password = req.body.password;
+  // do validations on the password
+  // store the password in the database
+  user.User.findOne({_id:id},function(err,user){
+    if(err) {
+      console.log(err);
+      res.send("",404);
+    } else {
+      user.password = password;
+      user.created_at = new Date();
+      user.save(function(){
+        req.body.andrew_id = user.andrew_id;
+        req.body.password = user.password;
+        auth.login(req,res);
+      });
+    }
+  });
+  // call the login function and redirect to the home page
 });
 app.all('/logincheck',auth.logincheck);
 app.all('/logout',auth.requiresAuth, auth.logout);
