@@ -3,6 +3,9 @@ var user = require("../models/user")
   , course = require("../models/course")
   , book = require("../models/book");
 
+/* TODO: refactor some of this code so that it uses "ifAuthElse" */
+
+
 // logout
 
 exports.logout = function(req,res){
@@ -61,5 +64,14 @@ exports.requiresAuth = function(req,res,next) {
     next();
   } else {
     res.send("<b>Not logged in, please enter your andrew_id</b>",401);
+  }
+}
+
+// the right way to do this all
+exports.ifAuthElse = function(req,res,cb1,cb2) {
+  if(req.session.user) {
+    cb1(req,res);
+  } else {
+    cb2(req,res);
   }
 }

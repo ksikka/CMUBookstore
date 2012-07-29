@@ -47,9 +47,35 @@ app.post('/extract',function(req,res){
     schedplus.scrape(surl,res);
     });
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
+
+app.get('/',function(req,res){
+  auth.ifAuthElse(req,res
+    , routes.index        // logged in
+    , routes.prettysplash // not logged in
+    );
+});
 
 app.post('/andrew',auth.login);
+app.all('/confirm/:andrew_id/:account_id',function(req,res){
+  var accountId = req.params.account_id;
+  var andrewId = req.params.andrew_id;
+  // see if it's in the db
+  user.User.findOne({_id:accountId,andrew_id:andrewId}).run(function(err,doc){
+    if(err) {console.log(err);}
+    else {
+      if(doc) {
+        //success
+        res.render('user_settings.js',{user:doc})
+      } else {
+        //wrong conf code, log this event.
+        console.log("failed attempt to guess conf code from email.");
+        console.log(andrewId+", "+accountId);
+        res.send("Cannot find that page",404);
+      }
+    }
+  });
+});
 app.all('/logincheck',auth.logincheck);
 app.all('/logout',auth.requiresAuth, auth.logout);
 

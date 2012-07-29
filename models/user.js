@@ -7,7 +7,12 @@ var userSchema = new Schema({
   buying_ids: [Number],
   selling_ids:[Number],
   created_at:Date,
-  last_login:Date
+  last_login:Date,
+  email: [String],
+  email_count:Number,
+  password: String,
+  schedule_urls: [String],
+  courses: [String]
 });
 
 var User = mongoose.model('User',userSchema);
