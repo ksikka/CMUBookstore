@@ -4,6 +4,7 @@ var user = require("../models/user")
   , book = require("../models/book");
 var email = require("../email.js")
 var EMAIL_LIMIT = 4;
+var routes = require("../routes")
 /* TODO: refactor some of this code so that it uses "ifAuthElse" */
 
 
@@ -11,11 +12,13 @@ var EMAIL_LIMIT = 4;
 
 exports.logout = function(req,res){
   siteUser = req.session.user;
-  req.session.destroy(function(err){
+  req.session.user = null;
+  req.session.save(function(err){
     if(err){ console.log(err); }
     else{
       console.log("Logged out " + siteUser);
-      res.send(true);
+      req.flash('info','Logged out successfully');
+      res.redirect('home');
     }
   });
 }
@@ -60,15 +63,16 @@ exports.login = function(req,res){
             console.log("Error " + err);
             req.session.user = doc;
             req.session.save(function() {
-            res.render('index',{login:true,andrew:req.session.user.andrew_id,title:'Welcome.'});
-            //res.send({login:true,andrew:req.session.user.andrew_id});
+              res.redirect('home');
+              //res.send({login:true,andrew:req.session.user.andrew_id});
           });
         });
       }
     }
     else{
       console.log('no');
-      res.send(false);
+      req.flash('error',"Login failed");
+      res.redirect('home');
     }
   });
 }
@@ -91,7 +95,8 @@ exports.requiresAuth = function(req,res,next) {
   if(req.session.user) {
     next();
   } else {
-    res.send("<b>Not logged in, please enter your andrew_id</b>",401);
+    req.flash('error',"Not Logged in");
+    res.redirect('home');
   }
 }
 

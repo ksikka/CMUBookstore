@@ -52,7 +52,7 @@ app.post('/extract',function(req,res){
 
 app.get('/',function(req,res){
   auth.ifAuthElse(req,res
-    , routes.index        // logged in
+    , routes.index // logged in
     , routes.prettysplash // not logged in
     );
 });

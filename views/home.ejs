@@ -1,1 +1,19 @@
 <h1>splash</h2>
+<form action="/andrew" method="POST">
+<div>Enter username, password:</div>
+<input name="andrew_id" type="text" />
+<input name="password" type="password" />
+<button type="submit">Submit</button>
+</form>
+<% if(!(typeof flash ==="undefined")) { %>
+  <% var errors = flash.error || []; %>
+  <% for(var i = 0; i < errors.length; i++) { %>
+    <div class="error"><%= errors[i] %></div>
+  <% } %>
+
+  <% var infos = flash.info || []; %>
+  <% for(var i = 0; i < infos.length; i++) { %>
+    <div class="info"><%= infos[i] %></div>
+  <% }} %>
+
+

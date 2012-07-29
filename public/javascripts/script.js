@@ -149,38 +149,5 @@ $('document').ready(function(){
     }
   });
 
-  // login function
-  $('#auth-details form').submit(function(){
-    var self = this;
-    $.post('/andrew',
-           $(this).serialize(),
-           function(res){
-             if (res.login) {
-               $(self).hide();
-               var andrew = res.andrew;
-               $("#user-identifier").text( andrew );
-               $("#auth-details p").show();
-               loggedIn = true;
-               initializeLists();
-             } else {
-               alert('Login failed: not a valid andrew id');
-             }
-           });
-    return false;
-  });
-
-  // logout function
-  $('#logout').click(function(){
-    $.get("/logout",function(d){
-      $('#auth-details p').hide();
-      $("#auth-details form input").val("");
-      $('#auth-details form').show();
-      console.log(d);
-      loggedIn = false;
-      clearLists();
-    });
-  });
-
-
 
 });

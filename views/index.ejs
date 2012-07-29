@@ -1,23 +1,39 @@
-<div id="search-wrapper">
-  Search for textbooks. (hint: drag and drop to the approriate list)
-  <div id="search">
-    <div id="search-nav">
-      <form method="GET" action="/search">
-        <input type="text" name="course_number" />
-        <input type="text" name="course_name" />
-        <input type="text" name="textbook_name" />
-        <button type="submit" style="display:none">Enter</button>
-      </form>
+<img id="ajaxloader" src="/images/ajax-loader.gif" />
+<div id="container">
+  <header>
+  <span id="logo">Tartan Textbooks</span>
+  <span id="auth-details">
+    <% if(!user) { %>
+    <form>
+      <label>Andrew ID</label><input type="text" name="andrew_id"/><button class="invisible" type="submit"></button>
+    </form>
+    <% } else { %>
+      <span><p>Logged in: <%= user.name %> | <a href="/logout" id="logout">Log out</a><p><span>
+    <% } %>
+  </header>
+  <div id="main" class="clearfix">
+    <div id="search-wrapper">
+      Search for textbooks. (hint: drag and drop to the approriate list)
+      <div id="search">
+        <div id="search-nav">
+          <form method="GET" action="/search">
+            <input type="text" name="course_number" />
+            <input type="text" name="course_name" />
+            <input type="text" name="textbook_name" />
+            <button type="submit" style="display:none">Enter</button>
+          </form>
+        </div>
+        <div id="search-results" class="panel">
+        </div>
+      </div>
     </div>
-    <div id="search-results" class="panel">
-    </div>
-  </div>
-</div>
 
-<div id="personal-list-wrapper">
-  Buy list:
-  <div id="buy-list" class="panel">
+    <div id="personal-list-wrapper">
+      Buy list:
+      <div id="buy-list" class="panel">
+      </div>
+      Sell list:
+      <div id="sell-list" class="panel"></div>
+    </div>
   </div>
-  Sell list:
-  <div id="sell-list" class="panel"></div>
 </div>
