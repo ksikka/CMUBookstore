@@ -38,8 +38,14 @@ app.configure('production', function(){
 var search = require('./controllers/search');
 var auth = require('./controllers/auth');
 var books = require('./controllers/books');
+var schedplus = require('./scheduleplus.js');
 
 // Routes
+app.post('/extract',function(req,res){
+    var surl = req.body.surl;
+    console.log(surl);
+    schedplus.scrape(surl,res);
+    });
 
 app.get('/', routes.index);
 
