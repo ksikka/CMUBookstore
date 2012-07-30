@@ -80,10 +80,15 @@ function buy(e) {
     $.ajax({
       type: "PUT",
       url: "/user/books/buying",
-      data: {book_id:book_id},
+      data: {book_id:book_id,price:50},
       success:function(h){
         buying.push(book_id);
         $(e).addClass('buying');
+        $.get("/books/"+book_id, function(data){
+          // create a modal dialog with the data
+          $(data).modal({
+          });
+        });
         // get html for buy list
         // render html in the buy list.
         $('#buy-list').html(h.html);
@@ -97,7 +102,7 @@ function sell(e) {
     $.ajax({
       type: "PUT",
       url: "/user/books/selling",
-      data: {book_id:book_id},
+      data: {book_id:book_id,price:50},
       success:function(h){
         selling.push(book_id);
         $(e).addClass('selling');
@@ -148,6 +153,7 @@ $('document').ready(function(){
       loggedIn = false;
     }
   });
+
 
 
 });

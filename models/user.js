@@ -5,13 +5,17 @@ var userSchema = new Schema({
   _id:Schema.ObjectId,
   andrew_id: {type:String},
   name: String,
-  buying_ids: [Number],
-  selling_ids:[Number],
-  created_at:Date,
-  last_login:Date,
   email: [String],
   email_count:Number,
+
+  created_at:Date,
+  last_login:Date,
   password: String,
+
+  buying_ids: [Number],
+  selling_ids:[Number],
+  buying_prices: [Number],
+  selling_prices:[Number],
   schedule_urls: [String],
   courses: [String]
 });

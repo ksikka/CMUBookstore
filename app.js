@@ -68,11 +68,13 @@ app.get('/search',auth.requiresAuth,search.search);
 app.get('/user/books/buying',auth.requiresAuth, books.getBuyList);
 app.get('/user/books/selling',auth.requiresAuth, books.getSellList);
 
-app.put('/user/books/selling',auth.requiresAuth, books.addBookToSellList);
 app.put('/user/books/buying',auth.requiresAuth, books.addBookToBuyList);
+app.put('/user/books/selling',auth.requiresAuth, books.addBookToSellList);
 
 app.del('/user/books/buying',auth.requiresAuth, books.removeBookFromBuyList);
 app.del('/user/books/selling',auth.requiresAuth, books.removeBookFromSellList);
+
+app.get('/books/:isbn',books.expandedView);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

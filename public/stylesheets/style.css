@@ -127,9 +127,22 @@ header {
 }
 
 
-
-
 #ajaxloader {position:absolute;top:20px;left:20px;z-index:10;}
+
+
+.simplemodal-overlay {
+background-color:black;
+}
+
+.simplemodal-container {
+background-color:white;
+padding:20px;
+width:600px;
+height:400px;
+}
+
+
+
 
 
 /*********/
