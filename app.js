@@ -41,6 +41,7 @@ var books = require('./controllers/books');
 //only for dev purposes
 var schedplus = require('./scheduleplus.js');
 var user = require('./models/user.js');
+var bcrypt = require('bcrypt');
 // Routes
 app.post('/extract',function(req,res){
     var surl = req.body.surl;
@@ -95,13 +96,25 @@ app.post('/user',function(req,res){
       console.log(err);
       res.send("",404);
     } else {
-      user.password = password;
-      user.created_at = new Date();
-      user.save(function(){
-        req.body.andrew_id = user.andrew_id;
-        req.body.password = user.password;
-        auth.login(req,res);
-      });
+      if(user && !user.created_at) {
+        bcrypt.genSalt(10, function(err, salt) {
+          bcrypt.hash(password, salt, function(err, hash) {
+            // Store hash
+            user.password = hash;
+            user.created_at = new Date();
+            user.selling_ids = [];
+            user.buying_ids = []
+            user.last_login = null;
+            user.save(function(){
+              req.body.andrew_id = user.andrew_id;
+              req.body.password = password;
+              auth.login(req,res);
+            });
+          });
+        });
+      } else {
+        res.send("Sorry.",404);
+      }
     }
   });
   // call the login function and redirect to the home page

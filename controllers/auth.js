@@ -5,6 +5,8 @@ var user = require("../models/user")
 var email = require("../email.js")
 var EMAIL_LIMIT = 4;
 var routes = require("../routes")
+var bcrypt = require('bcrypt');
+
 /* TODO: refactor some of this code so that it uses "ifAuthElse" */
 
 
@@ -28,6 +30,7 @@ exports.logout = function(req,res){
 
 exports.login = function(req,res){
   var andrew_id = req.body.andrew_id;
+  var password = req.body.password;
   console.log('Received '+req.body.andrew_id);
   andrew_id = trim(andrew_id.toLowerCase());
   user.User.findOne({"andrew_id":andrew_id}).run(function(err,doc){
@@ -56,16 +59,25 @@ exports.login = function(req,res){
         }
       } else {
         console.log('yes');
-        //account was already initialized, business as usual
-        doc.last_login = new Date();
-        doc.save(function(err){
-          if(err)
-            console.log("Error " + err);
-            req.session.user = doc;
-            req.session.save(function() {
+        //account was already initialized, now check password
+        bcrypt.compare(password, doc.password, function(err, equality) {
+          if (err) {console.log(err); req.flash('error','server error, see logs'); res.redirect('home'); } else {
+            if(!equality) {
+              console.log('password doesnt match');
+              req.flash('error','Wrong password');
               res.redirect('home');
-              //res.send({login:true,andrew:req.session.user.andrew_id});
-          });
+            } else {
+              doc.last_login = new Date();
+              doc.save(function(err){
+                if(err)
+                  console.log("Error " + err);
+                  req.session.user = doc;
+                  req.session.save(function() {
+                    res.redirect('home');
+                });
+              });
+            }
+          }
         });
       }
     }
