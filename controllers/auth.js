@@ -25,6 +25,27 @@ exports.logout = function(req,res){
   });
 }
 
+function handleEmail(req,res,doc) {
+  console.log('no. can i send an email?');
+  //person has not yet initialized account, send them a confirmation email
+  if(doc.email_count <= EMAIL_LIMIT) {
+    console.log('yes.');
+    email.send(/* TODO integrate sendgrid */);
+    doc.email_count++;
+    doc.save(function(err){
+      if(err){
+        console.log(err);
+        res.send("error, see logs",500);
+      }
+      else {
+        res.send((EMAIL_LIMIT - doc.email_count).toString());
+      }
+    });
+  } else {
+    console.log('no');
+    res.send("too many emails sent. sorry.");
+  }
+}
 
 // login
 
@@ -38,25 +59,7 @@ exports.login = function(req,res){
     if(doc){
       console.log('yes. has it been initialized?');
       if(!doc.created_at) {
-        console.log('no. can i send an email?');
-        //person has not yet initialized account, send them a confirmation email
-        if(doc.email_count <= EMAIL_LIMIT) {
-          console.log('yes.');
-          email.send(/* TODO fill this out sometime*/);
-          doc.email_count++;
-          doc.save(function(err){
-            if(err){
-              console.log(err);
-              res.send("error, see logs",500);
-            }
-            else {
-              res.send((EMAIL_LIMIT - doc.email_count).toString());
-            }
-          });
-        } else {
-          console.log('no');
-          res.send("too many emails sent. sorry.");
-        }
+        handleEmail(req,res,doc);
       } else {
         console.log('yes');
         //account was already initialized, now check password
