@@ -6,7 +6,7 @@ var email = require("../email.js")
 var EMAIL_LIMIT = 4;
 var routes = require("../routes")
 var bcrypt = require('bcrypt');
-
+var baseUrl = require('../secrets').baseUrl;
 /* TODO: refactor some of this code so that it uses "ifAuthElse" */
 
 
@@ -30,16 +30,18 @@ function handleEmail(req,res,doc) {
   //person has not yet initialized account, send them a confirmation email
   if(doc.email_count <= EMAIL_LIMIT) {
     console.log('yes.');
-    email.send(/* TODO integrate sendgrid */);
-    doc.email_count++;
-    doc.save(function(err){
-      if(err){
-        console.log(err);
-        res.send("error, see logs",500);
-      }
-      else {
-        res.send((EMAIL_LIMIT - doc.email_count).toString());
-      }
+    body = "Click the link to continue account creation: <a href=\""+baseUrl+"/confirm/"+doc.andrew_id+"/"+doc._id.toString()+"\">link</a>";
+    email.send( doc.andrew_id+"@andrew.cmu.edu", "Confirmation", body,function(){
+      doc.email_count++;
+      doc.save(function(err){
+        if(err){
+          console.log(err);
+          res.send("error, see logs",500);
+        }
+        else {
+          res.send((EMAIL_LIMIT - doc.email_count).toString());
+        }
+      });
     });
   } else {
     console.log('no');
