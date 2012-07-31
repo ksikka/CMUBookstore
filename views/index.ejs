@@ -8,19 +8,23 @@
       <label>Andrew ID</label><input type="text" name="andrew_id"/><button class="invisible" type="submit"></button>
     </form>
     <% } else { %>
-      <span><p>Logged in: <%= user.name %> | <a href="/logout" id="logout">Log out</a><p><span>
+      <span><p>Logged in: <%= user.name %>  | <a href="/logout" id="logout">Log out</a><p><span>
     <% } %>
   </header>
   <div id="main" class="clearfix">
     <div id="search-wrapper">
-      Search for textbooks. (hint: drag and drop to the approriate list)
+      <a class="search" href="#">Search</a> | <a class="schedule" href="#">Schedule</a>
       <div id="search">
         <div id="search-nav">
-          <form method="GET" action="/search">
+          <form class="search" method="GET" action="/search">
             <input type="text" name="course_number" />
             <input type="text" name="course_name" />
             <input type="text" name="textbook_name" />
             <button type="submit" style="display:none">Enter</button>
+          </form>
+          <form class="schedule" method="GET" action="/search">
+            <input type="text" name="surl" size=50 />
+            <button type="submit">Submit</button>
           </form>
         </div>
         <div id="search-results" class="panel">

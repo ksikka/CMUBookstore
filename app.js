@@ -43,11 +43,12 @@ var search = require('./controllers/search')
 var schedplus = require('./scheduleplus.js');
 
 // Routes
+/*
 app.post('/extract',function(req,res){
     var surl = req.body.surl;
     console.log(surl);
     schedplus.scrape(surl,res);
-});
+});*/
 
 app.get('/',function(req,res){
   auth.ifAuthElse(req,res

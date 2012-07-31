@@ -32,15 +32,13 @@ function validateURL(inputUrl) {
   return validInputUrl;
 }
 
-function scrape(inputUrl,res) {
+function scrape(inputUrl,callback) {
+  if(!inputUrl) {callback([])} else {
   inputUrl = validateURL(inputUrl);
-  if (!inputUrl){ res.send("error: malformed input url"); } else {
+  if (!inputUrl){ callback([]); } else {
   var sman = false;
   if (isSMan(inputUrl)) sman = true;
   request({uri: inputUrl}, function(err, response, body){
-      console.log(err);
-      console.log(response);
-      console.log(body);
     var self = this;
     self.items = new Array();
     //Just a basic error check
@@ -64,9 +62,9 @@ function scrape(inputUrl,res) {
          var cnumber = courseLinks[i].innerHTML.replace('-','').match(/[0-9]+/)[0];
          courseNumbers.push(cnumber);
        }
-       res.send(courseNumbers);
+       callback(courseNumbers);
     });
   });
-}}
+}}}
 
 exports.scrape = scrape;

@@ -4,6 +4,7 @@
 var book = require('../models/book')
   , course = require('../models/course')
   , user = require('../models/user');
+var scraper = require('../schedulePlus');
 
 var utils = require('../utils');
 
@@ -23,9 +24,23 @@ function blankQuery(q) {
   return q.course_name == "" && q.course_number == "" && q.textbook_name == "";
 }
 
+function scheduleSearch(surl,callback) {
+  scraper.scrape(surl,function(course_ids){
+    course.Course.find({_id:{$in:course_ids}}).limit(15).exec(function(err,courses){
+      var course_dictionary = {};
+      courses.forEach(function(course){ course_dictionary[course._id] = course; });
+        book.Book.find({"course_ids":{"$in":course_ids }})
+          .exec(function(err,books) {
+            callback(err,{"books":books,"course_dictionary":course_dictionary})
+          });
+    });
+  });
+}
+
 //Input: Valid query, callback function which takes in (docs)
 //Output: List of matching docs, order not yet determined
 var search = function(query,callback) {
+  if(query.surl && query.surl != "") { scheduleSearch(query.surl,callback); } else {
   trimQuery(query);
   query.course_number = query.course_number.replace("-",""); // strips hyphens
   query.course_number = utils.sanitizeForRegex(query.course_number);
@@ -54,7 +69,7 @@ var search = function(query,callback) {
           });
       }
     });
-}
+}}
 
 exports.search = function(req,res){
   search(req.query,

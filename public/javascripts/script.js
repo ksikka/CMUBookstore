@@ -42,6 +42,7 @@ function clearLists() {
 }
 
 function getSearchResults(q,callback) {
+  console.log(q);
   $.ajax({
     type: 'GET',
     url: '/search',
@@ -135,12 +136,20 @@ $('document').ready(function(){
     complete: function(){$('#ajaxloader').hide()},
   });
 
-  $('#search-nav form').keyup(function(){
+  $('#search-nav form.search').keyup(function(){
     // TODO implement rate-limiting and local caching
     // for now, update state every single time.
-    q = $('form').serialize();
+    var q = $('form.search').serialize();
     getSearchResults(q
       , renderSearchResults);
+  });
+
+  $('#search-nav form.schedule').submit(function(){
+    var q = $('form.schedule').serialize();
+    console.log(q);
+    getSearchResults(q
+      , renderSearchResults);
+    return false;
   });
 
   //initialize lists
@@ -162,5 +171,14 @@ $('document').ready(function(){
     }
   });
 
+  $('form.schedule').hide();
+  $('a.search').click(function(){
+    $('form.schedule').hide();
+    $('form.search').show();
+  });
+  $('a.schedule').click(function(){
+    $('form.search').hide();
+    $('form.schedule').show();
+  });
 
 });
