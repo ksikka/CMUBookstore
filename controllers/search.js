@@ -4,7 +4,7 @@
 var book = require('../models/book')
   , course = require('../models/course')
   , user = require('../models/user');
-var scraper = require('../schedulePlus');
+var scraper = require('../scheduleplus');
 
 var utils = require('../utils');
 
