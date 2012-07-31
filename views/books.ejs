@@ -2,9 +2,9 @@
   No books match this query
 <% } else { %>
   <% for(var i = 0; i < books.length; i++) { %>
-    <div class="listing">
       <% var book = books[i] %>
       <% var book_id = book._id; %>
+      <div class="listing" book_id="<%= book_id %>">
 
       <div>
         <span class="title"><%= book.title %></span>
@@ -22,9 +22,12 @@
            <div>Required for <%= courseStrings.join(', ') %></div>
        <%  } %>
 
-      <a onclick="buy(this);" href="#!buy" book_id="<%= book_id %>">Buy</a>
+       <!--
+      <a onclick="buy(this);" href="#" book_id="<%= book_id %>">Buy</a>
       |
-      <a onclick="sell(this);" href="#!sell" book_id="<%= book_id %>">Sell</a>
+      <a onclick="sell(this);" href="#" book_id="<%= book_id %>">Sell</a>
+      -->
+      <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a>
 
     </div>
   <% } %>

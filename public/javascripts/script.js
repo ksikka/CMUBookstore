@@ -75,41 +75,49 @@ function removeFromList(e,action) {
     })
 }
 
+function viewMore(e) {
+  var book_id = $(e).attr("book_id");
+  $.get("/books/"+book_id, function(data){
+    // create a modal dialog with the data
+    $(data).modal({
+      overlayClose:true
+
+    });
+  });
+}
+
 function buy(e) {
   var book_id = $(e).attr('book_id');
+  var price = $('#expanded_book input').val();
     $.ajax({
       type: "PUT",
       url: "/user/books/buying",
-      data: {book_id:book_id,price:50},
+      data: {book_id:book_id,price:price},
       success:function(h){
         buying.push(book_id);
         $(e).addClass('buying');
-        $.get("/books/"+book_id, function(data){
-          // create a modal dialog with the data
-          $(data).modal({
-          });
-        });
         // get html for buy list
         // render html in the buy list.
         $('#buy-list').html(h.html);
-        console.log("added to buy list: "+book_id)
+        $.modal.close();
       }
     })
 }
 
 function sell(e) {
   var book_id = $(e).attr('book_id');
+  var price = $('#expanded_book input').val();
     $.ajax({
       type: "PUT",
       url: "/user/books/selling",
-      data: {book_id:book_id,price:50},
+      data: {book_id:book_id,price:price},
       success:function(h){
         selling.push(book_id);
         $(e).addClass('selling');
         // get html for buy list
         // render html in the buy list.
         $('#sell-list').html(h.html);
-        console.log("added to sell list: "+book_id)
+        $.modal.close();
       }
     })
 }
@@ -153,7 +161,6 @@ $('document').ready(function(){
       loggedIn = false;
     }
   });
-
 
 
 });
