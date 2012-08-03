@@ -3,21 +3,23 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   _id:Schema.ObjectId,
-  andrew_id: {type:String},
-  name: String,
-  email: [String],
-  email_count:Number,
+  andrew_id: {type:String, required:true},
+  name: {type:String, required:true},
+  email: {type:[String], required:true},
+  email_count: {type:Number, default:0},
 
-  created_at:Date,
-  last_login:Date,
-  password: String,
+  created_at: {type:Date, default:null},
+  last_login: {type:Date, default:null},
+  password: {type:String, default:null},
 
-  buying_ids: [Number],
-  selling_ids:[Number],
-  buying_prices: [Number],
-  selling_prices:[Number],
-  schedule_urls: [String],
-  courses: [String]
+  buying_ids: {type:[Number], default: []},
+  selling_ids:{type:[Number], default: []},
+  buying_prices: {type:[Number], default: []},
+  selling_prices:{type:[Number], default: []},
+  courses: {type:[String], default: []},
+
+  departments: {type:[String], default: []},
+  year: {type:String, default: null}
 });
 
 var User = mongoose.model('User',userSchema);
