@@ -30,8 +30,8 @@ function handleEmail(req,res,doc) {
   //person has not yet initialized account, send them a confirmation email
   if(doc.email_count <= EMAIL_LIMIT) {
     console.log('yes.');
-    body = "Click the link to continue account creation: <a href=\""+baseUrl+"/confirm/"+doc.andrew_id+"/"+doc._id.toString()+"\">link</a>";
-    email.send( doc.andrew_id+"@andrew.cmu.edu", "Confirmation", body,function(){
+    body = "If you did not just enter your Andrew ID to Tartan Textbooks, please skip to the section labeled, reporting spam.<br><br> Thanks for visiting Tartan Textbooks, the best way to buy and sell textbooks online! We're sending you this email to confirm that you are who you say you are. Click the link to set your account password: <a href=\""+baseUrl+"/confirm/"+doc.andrew_id+"/"+doc._id.toString()+"\">link</a>. Once your password is set, you will not be able to change it, so please type carefully. Note that having a password is optional, but highly recommended. <br> From the Tartan Textbooks team, we hope you enjoy the site. And remember, buy low and sell high :)";
+    email.send( doc.email, "Continue Tartan Textbooks signup", body,function(){
       doc.email_count++;
       doc.save(function(err){
         if(err){
