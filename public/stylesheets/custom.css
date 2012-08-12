@@ -1,0 +1,90 @@
+.loginpane
+{
+	position:absolute;
+	top:-500px;
+	margin-left: 20px;
+}
+
+.bookshelf 
+{
+    position:fixed;
+    right:0;
+    top:0;
+    background: url('/images/bookshelf_middle.png');
+    background-size:100% auto;;
+    background-repeat:repeat-y;
+    background-position:center;
+    width:360px;
+    height:100%;
+    box-shadow:-2px 2px 20px #333;
+}
+
+.bookshelf .top
+{
+	position: absolute;
+	top:0;
+	z-index:1;
+	width:100%;
+	height:300px;
+	background: url('/images/bookshelf_top.png');
+    background-size:100% auto;;
+    background-repeat:no-repeat;
+    background-position:top;
+}
+
+.bookshelf .bottom
+{
+	position: absolute;
+	bottom:0;
+	z-index:1;
+	width:100%;
+	height:300px;
+	background: url('/images/bookshelf_bottom.png');
+    background-size:100% auto;;
+    background-repeat:no-repeat;
+    background-position:bottom;
+}
+
+.large_search
+{
+	margin-top: 140px;
+	text-align:center;
+}
+
+.large_search h2
+{
+	font-style:italic;
+	padding-bottom:40px;
+}
+
+
+#regularInput.large_box
+{
+	width:360px;
+	margin-left: auto;
+	margin-right: auto;
+	height:30px;
+	font-size:18px;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding-left:15px;
+}
+.large_search hr 
+{
+	margin-top:25px;
+	margin-bottom:25px;
+	width:0;
+	margin-left: auto;
+    margin-right: auto;
+    padding-right: 20px;
+}
+
+.large_search hr:before 
+{
+	position:absolute;
+	content:'or';
+	margin-top: -12px;
+	font-size: 20px;
+	text-align:center;
+	color:#888;
+}
