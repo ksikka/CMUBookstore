@@ -8,7 +8,7 @@ exports.send = function(to_address, subject, body, callback) {
     port : "587",
     domain : "tartantextbooks.com",
     to : to_address,
-    from : "info@tartantextbooks.com",
+    from : "admin@tartantextbooks.com",
     subject : subject + " - Tartan Textbooks",
     html: body,
     authentication : "login",
@@ -20,6 +20,7 @@ exports.send = function(to_address, subject, body, callback) {
       console.log(err);
     }
     else {
+      console.log(result);
       callback();
     }
   }

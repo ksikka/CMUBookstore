@@ -1,10 +1,68 @@
-<h1>splash</h2>
-<form action="/andrew" method="POST">
-<div>Enter username, password:</div>
-<input name="andrew_id" type="text" />
-<input name="password" type="password" />
-<button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Tartan Textbooks</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+	<link rel="stylesheet" href="stylesheets/custom.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	<link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'> <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<!-- Delete everything in this .container and get started on your own site! -->
+	
+	<div class="container">
+		<div class="paper">
+		<div class="nine columns" style="margin-top: 20px; padding-bottom:40px;">
+			<h1 class="remove-bottom">CMU Bookstore</h1>
+			<hr />
+			<div class="one-third column">
+			<h3>Docs &amp; Support</h3>
+			<p>The easiest way to really get started with Skeleton is to check out the full docs and info at <a href="http://www.getskeleton.com">www.getskeleton.com.</a>. Skeleton is also open-source and has a <a href="https://github.com/dhgamache/skeleton">project on git</a>, so check that out if you want to report bugs or create a pull request. If you have any questions, thoughts, concerns or feedback, please don't hesitate to email me at <a href="mailto:hi@getskeleton.com">hi@getskeleton.com</a>.</p>
+		</div>
+		</div>
+		</div>
+
+		<div class="paper loginpane">
+		<div class="four columns" style="margin-top: 40px">
+			<h4 style="margin-bottom:20px;">Login</h4>
+      <form action="/andrew" method="POST">
+        <p><input name="andrew_id" type="text" id="regularInput" placeholder="Andrew ID"></p>
+        <p><input name="password" type="text" id="regularInput" placeholder="Password"></p>
+        <p><button type="submit">Login</button></p>
 <% if(!(typeof flash ==="undefined")) { %>
   <% var errors = flash.error || []; %>
   <% for(var i = 0; i < errors.length; i++) { %>
@@ -15,5 +73,16 @@
   <% for(var i = 0; i < infos.length; i++) { %>
     <div class="info"><%= infos[i] %></div>
   <% }} %>
+      </form>
+		</div>
+
+		
+
+		</div>
+	</div><!-- container -->
 
 
+<!-- End Document
+================================================== -->
+</body>
+</html>
