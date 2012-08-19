@@ -32,16 +32,16 @@ function handleEmail(req,res,doc) {
     console.log('yes.');
     body = "If you did not just enter your Andrew ID to Tartan Textbooks, please skip to the section labeled, reporting spam.<br><br> Thanks for visiting Tartan Textbooks, the best way to buy and sell textbooks online! We're sending you this email to confirm that you are who you say you are. Click the link to set your account password: <a href=\""+baseUrl+"/confirm/"+doc.andrew_id+"/"+doc._id.toString()+"\">link</a>. Once your password is set, you will not be able to change it, so please type carefully. Note that having a password is optional, but highly recommended. <br> From the Tartan Textbooks team, we hope you enjoy the site. And remember, buy low and sell high :)";
     email.send( ""+doc.email, "Continue Tartan Textbooks signup", body,function(er){
-    //email.send( doc.andrew_id + "@andrew.cmu.edu", "Continue Tartan Textbooks signup", body,function(er){
       console.log(er);
       doc.email_count++;
+      doc.created_at = new Date();
       doc.save(function(err){
         if(err){
           console.log(err);
           res.send("error, see logs",500);
         }
         else {
-          res.send((EMAIL_LIMIT - doc.email_count).toString());
+          authorize(doc,req,res);
         }
       });
     });
@@ -56,6 +56,7 @@ function handleEmail(req,res,doc) {
 exports.login = function(req,res){
   var andrew_id = req.body.andrew_id;
   var password = req.body.password;
+  if(!password) password = "";
   console.log('Received '+req.body.andrew_id);
   andrew_id = trim(andrew_id.toLowerCase());
   user.User.findOne({"andrew_id":andrew_id}).run(function(err,doc){
@@ -67,32 +68,38 @@ exports.login = function(req,res){
       } else {
         console.log('yes');
         //account was already initialized, now check password
-        bcrypt.compare(password, doc.password, function(err, equality) {
-          if (err) {console.log(err); req.flash('error','server error, see logs'); res.redirect('home'); } else {
-            if(!equality) {
-              console.log('password doesnt match');
-              req.flash('error','Wrong password');
-              res.redirect('home');
-            } else {
-              doc.last_login = new Date();
-              doc.save(function(err){
-                if(err)
-                  console.log("Error " + err);
-                  req.session.user = doc;
-                  req.session.save(function() {
-                    res.redirect('home');
-                });
-              });
+        if (!doc.password){
+          authorize(doc,req,res);
+        } else {
+          bcrypt.compare(password, doc.password, function(err, equality) {
+            if (err) {console.log(err); req.flash('error','server error, see logs'); res.redirect('home'); } else {
+              if(!equality) {
+                console.log('password doesnt match');
+                res.send({success:false, flash:"Wrong password", password:true})
+              } else {
+                authorize(doc,req,res);
+              }
             }
-          }
-        });
+          });
+        }
       }
     }
     else{
       console.log('no');
-      req.flash('error',"Login failed");
-      res.redirect('home');
+      res.send({success:false, flash:"Andrew ID error"});
     }
+  });
+}
+
+function authorize(doc,req,res) {
+  doc.last_login = new Date();
+  doc.save(function(err){
+    if(err)
+      console.log("Error " + err);
+      req.session.user = doc;
+      req.session.save(function() {
+        res.send({success:true, redirect: '/'});
+    });
   });
 }
 

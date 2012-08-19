@@ -58,6 +58,7 @@ app.get('/',function(req,res){
 });
 
 app.post('/andrew',auth.login);
+//deprecated
 app.all('/logincheck',auth.logincheck);
 app.all('/logout',auth.requiresAuth, auth.logout);
 

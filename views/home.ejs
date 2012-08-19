@@ -5,19 +5,13 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 
-	<!-- Basic Page Needs
-  ================================================== -->
 	<meta charset="utf-8">
 	<title>Tartan Textbooks</title>
-	<meta name="description" content="">
-	<meta name="author" content="">
+  <meta name="description" content="One-stop shop for all your textbook needs. Search, compare, list, and buy. Carnegie Mellon University.">
+	<meta name="author" content="Karan Sikka, Ilter Canberk, Matt Schallert, Carnegie Mellon University">
 
-	<!-- Mobile Specific Metas
-  ================================================== -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-	<!-- CSS
-  ================================================== -->
 	<link rel="stylesheet" href="stylesheets/base.css">
 	<link rel="stylesheet" href="stylesheets/skeleton.css">
 	<link rel="stylesheet" href="stylesheets/layout.css">
@@ -28,8 +22,6 @@
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<!-- Favicons
-	================================================== -->
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
@@ -49,33 +41,70 @@
 	<div class="container">
 		<div class="paper">
 		<div class="nine columns" style="margin-top: 20px; padding-bottom:40px;">
-			<h1 class="remove-bottom">CMU Bookstore</h1>
+			<h1 class="remove-bottom">Tartan Textbooks</h1>
 			<hr />
-			<div class="one-third column">
-			<h3>Docs &amp; Support</h3>
-			<p>Loreming ipsuiming easy book buy. Sell. Buy something use it for a year. And then sell again. This cycle goes like this. And repeats. And happens again.</p>
+			<div class="two-third column">
+			<h3>Now at Carnegie Mellon</h3>
+      <p><ol>
+        <li>Search by course or textbook</li>
+        <li>Attach a link to your schedule</li>
+        <li>Compare prices online</li>
+        <li>Buy textbooks directly from students on campus</li>
+        <li>Sell textbooks quickly and easily</li>
+      </ol></p>
 		</div>
 		</div>
 		</div>
 
 		<div class="paper loginpane">
 		<div class="four columns" style="margin-top: 96px">
-			<h4 style="margin-bottom:20px;">Login</h4>
+			<h4 style="margin-bottom:20px;">Get started</h4>
       <form action="/andrew" method="POST">
-        <p><input name="andrew_id" type="text" id="regularInput" placeholder="Andrew ID"></p>
+        <p><label style="display:inline; margin-right:15px;" for="andrew_id">Andrew ID</label>
+        <input name="andrew_id" type="text" id="regularInput" placeholder="" style="width:100px; display:inline;"/></p>
         <p><input name="password" type="password" id="regularInput" placeholder="Password"></p>
-        <p><button type="submit">Login</button></p>
-<% if(!(typeof flash ==="undefined")) { %>
-  <% var errors = flash.error || []; %>
-  <% for(var i = 0; i < errors.length; i++) { %>
-    <div class="error"><%= errors[i] %></div>
-  <% } %>
-
-  <% var infos = flash.info || []; %>
-  <% for(var i = 0; i < infos.length; i++) { %>
-    <div class="info"><%= infos[i] %></div>
-  <% }} %>
+        <p><button type="submit">Go</button></p>
       </form>
+      <!-- AJAX Login and Flash Messages -->
+      <script>
+      $('document').ready(function(){
+        $('input[type="password"]').hide();
+        $('form').submit(function(){
+          var self = this;
+          $.post('/andrew',$(self).serialize(), function(res){
+            //success field will always be present
+              //redirect field is present iff success is true.
+              //if success if false, password?.
+                //if password, make password visible
+                //else, inject flash
+            if(res.success) {
+              if(res.redirect === '/') document.location.reload(true);
+              document.location.href = res.redirect;
+            } else {
+              if(res.password && !$('input[type="password"]').is(':visible')) {
+                $('input[type="password"]').show().focus();
+              } else {
+                $('#flash_messages').html(res.flash);
+              }
+            }
+          });
+          return false;
+        });
+      });
+      </script>
+      <div id="flash_messages">
+        <% if(!(typeof flash ==="undefined")) { %>
+          <% var errors = flash.error || []; %>
+          <% for(var i = 0; i < errors.length; i++) { %>
+            <div class="error"><%= errors[i] %></div>
+          <% } %>
+
+          <% var infos = flash.info || []; %>
+          <% for(var i = 0; i < infos.length; i++) { %>
+            <div class="info"><%= infos[i] %></div>
+          <% } %>
+        <% } %>
+      </div>
 		</div>
 
 		

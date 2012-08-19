@@ -15,17 +15,18 @@ exports.create_page = function(req,res){
     else {
       if(doc) {
         //success
-        if(!doc.created_at) {
+        if(!doc.password) {
           // give the user a chance to fill out all their settings
           res.render('user_settings',{user:doc, title: "Create a new account"});
         } else {
-          res.send("Account already created for this user. proceed to <a href='/'>the site</a>");
+          req.flash('error','Please login');
+          res.redirect('/');
         }
       } else {
         //wrong conf code, log this event.
         console.log("failed attempt to guess conf code from email.");
         console.log(andrewId+", "+accountId);
-        res.send("Cannot find that page",404);
+        res.send("404: not a real page",404);
       }
     }
   });
@@ -41,7 +42,7 @@ exports.set_password = function(req,res){
       console.log(err);
       res.send("",500);
     } else {
-      if(user && !user.created_at) {
+      if(user && user.created_at && !user.password) {
         bcrypt.genSalt(10, function(err, salt) {
           bcrypt.hash(password, salt, function(err, hash) {
             // Store hash
