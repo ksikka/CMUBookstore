@@ -42,7 +42,6 @@ function clearLists() {
 }
 
 function getSearchResults(q,callback) {
-  console.log(q);
   $.ajax({
     type: 'GET',
     url: '/search',
@@ -58,6 +57,7 @@ function fixSearchBindings() {
 
 // also probably not necessary
 function renderSearchResults(result) {
+  console.log(result);
   $('#search-results').html(result.html);
   fixSearchBindings();
 }
@@ -136,7 +136,7 @@ $('document').ready(function(){
     complete: function(){$('#ajaxloader').hide()},
   });
 
-  $('#search-nav form.search').keyup(function(){
+  $('form.search').keyup(function(){
     // TODO implement rate-limiting and local caching
     // for now, update state every single time.
     var q = $('form.search').serialize();
@@ -144,7 +144,7 @@ $('document').ready(function(){
       , renderSearchResults);
   });
 
-  $('#search-nav form.schedule').submit(function(){
+  $('form.schedule').submit(function(){
     var q = $('form.schedule').serialize();
     console.log(q);
     getSearchResults(q

@@ -10,7 +10,7 @@
     position:fixed;
     right:0;
     top:0;
-    background: url('/images/bookshelf_middle.png');
+    background: url('../images/bookshelf_middle.png');
     background-size:100% auto;;
     background-repeat:repeat-y;
     background-position:center;
@@ -26,7 +26,7 @@
 	z-index:1;
 	width:100%;
 	height:300px;
-	background: url('/images/bookshelf_top.png');
+	background: url('../images/bookshelf_top.png');
     background-size:100% auto;;
     background-repeat:no-repeat;
     background-position:top;
@@ -39,7 +39,7 @@
 	z-index:1;
 	width:100%;
 	height:300px;
-	background: url('/images/bookshelf_bottom.png');
+	background: url('../images/bookshelf_bottom.png');
     background-size:100% auto;;
     background-repeat:no-repeat;
     background-position:bottom;
@@ -58,16 +58,17 @@
 }
 
 
-#regularInput.large_box
+input.large_box
 {
 	width:360px;
 	margin-left: auto;
 	margin-right: auto;
 	height:30px;
-	font-size:18px;
+	font-size:14px;
 	margin-top:5px;
 	margin-bottom:5px;
 	padding-left:15px;
+
 }
 .large_search hr 
 {
@@ -87,4 +88,55 @@
 	font-size: 20px;
 	text-align:center;
 	color:#888;
+}
+
+.large_search h2
+{
+	color:#444;
+}
+.bevel
+{
+}
+
+
+.papers {
+  background-color: white;
+  height: 140px;
+  padding: 20px;
+  width: 100%;
+  margin-top: 25px;
+  -webkit-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175);
+  -moz-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175);
+  box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175);
+    
+  margin-left:0px;
+  -webkit-transition: all .2s ease-in;
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+}
+
+.papers:hover {
+  margin-left:25px;
 }

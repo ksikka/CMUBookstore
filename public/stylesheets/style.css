@@ -111,7 +111,6 @@ header {
 #logo { font-size: 18pt; }
 #auth-details { float: right }
 .panel { overflow: scroll }
-#search-nav,#search-results,.listing,#buy-list,#sell-list {border: black solid 1px;}
 #search-nav { padding: 10px; }
 .listing {
   margin:2px;
