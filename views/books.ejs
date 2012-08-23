@@ -22,12 +22,12 @@
            <div>Required for <%= courseStrings.join(', ') %></div>
        <%  } %>
 
-       <!--
-      <a onclick="buy(this);" href="#" book_id="<%= book_id %>">Buy</a>
-      |
-      <a onclick="sell(this);" href="#" book_id="<%= book_id %>">Sell</a>
-      -->
-      <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a>
+        <form>
+    $<input type="text" name="price" />(must be 0 or higher, rounded to the nearest dollar)
+    <button onclick="buy(this)" book_id="<%= book._id.toString() %> "type="button">Buy</button>
+    <button onclick="sell(this)" book_id="<%= book._id.toString() %> "type="button">Sell</button>
+  </form>
+      <!-- <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a> -->
 
     </div>
   <% } %>

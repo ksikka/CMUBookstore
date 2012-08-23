@@ -213,9 +213,6 @@
 		margin-bottom: 20px; }
 	fieldset {
 		margin-bottom: 20px; }
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
 	textarea,
 	select {
 		border: 1px solid #ccc;

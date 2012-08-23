@@ -29,10 +29,13 @@ var loggedIn;
 
 function initializeLists() {
   $.get('/user/books/buying',function(h){
-    $('#buy-list').html(h.html);
-  });
-  $.get('/user/books/selling',function(h){
-    $('#sell-list').html(h.html);
+    var initial_content = h.html;
+
+    $.get('/user/books/selling',function(h){
+      initial_content += h.html;
+      //$('#sell-list').html(h.html);
+      $('#list-all').html(initial_content);
+    });
   });
 }
 
@@ -63,6 +66,7 @@ function renderSearchResults(result) {
 }
 
 function removeFromList(e,action) {
+  console.log("hey");
   var book_id = $(e).attr('book_id');
   $.ajax({
       type: 'DELETE',
@@ -80,10 +84,14 @@ function viewMore(e) {
   var book_id = $(e).attr("book_id");
   $.get("/books/"+book_id, function(data){
     // create a modal dialog with the data
-    $(data).modal({
-      overlayClose:true
+    // $(data).modal({
+    //   overlayClose:true
 
-    });
+    // });
+
+     console.log(data);
+     //e.append(data);
+     $(e).parent().append(data);
   });
 }
 
@@ -99,8 +107,8 @@ function buy(e) {
         $(e).addClass('buying');
         // get html for buy list
         // render html in the buy list.
-        $('#buy-list').html(h.html);
-        $.modal.close();
+        $('#search-results').append(h.html);
+        $(e).parent().fadeOut();
       }
     })
 }

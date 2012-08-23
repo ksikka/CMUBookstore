@@ -47,6 +47,7 @@
   <div class="bookshelf">
     <div class="top"></div>
     <div class="bottom"></div>
+    <div id="list-all"></div>
   </div>
   <div class="container">
       <div class="nine columns large_search">
@@ -69,6 +70,7 @@
 <!-- End Document
 ================================================== -->
 </body>
+<script src="/javascripts/script.js"></script>
 <script>
 
   $('.course_number').keypress(function(e) {
@@ -77,10 +79,7 @@
     }
   });
 
-  $(".large_box").keypress(function(event){
-
-      if ( event.which == 13 ) {
-
+  $('form.search').keyup(function(event){
       $("#course_number").animate({
         width:'120px',
         marginLeft:'0px'
@@ -121,7 +120,6 @@
         });
 
       });
-      }
   });
 </script>
 </html>
