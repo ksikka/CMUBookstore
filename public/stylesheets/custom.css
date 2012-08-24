@@ -37,7 +37,9 @@
 
 .bookshelf .bottom
 {
+  position: absolute;
 	z-index:1;
+  bottom: 0px;
 	width:100%;
 	height:200px;
   display: inline-block;
@@ -144,16 +146,16 @@ input.large_box
   height: 240px;
 }
 
-#list-all {
+.middle {
   position: absolute;
+  top:0;
   height: 100%;
-  margin-top: 65px;
   right: 0px;
+  padding: 0px;
   padding-right: 10px;
   padding-left: 10px;
   display: inline-block;
   z-index: 2;
-  margin-bottom: 165px;
   display: block;
 }
 

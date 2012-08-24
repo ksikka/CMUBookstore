@@ -105,11 +105,10 @@ function buy(e) {
       data: {book_id:book_id,price:price},
       success:function(h){
         buying.push(book_id);
-        $(e).addClass('buying');
         // get html for buy list
         // render html in the buy list.
         $(e).parent().parent().fadeOut();
-        $('#list-all').append(h.html);
+        $('#list-all').html(h.html);
       }
     })
 }
@@ -117,17 +116,17 @@ function buy(e) {
 function sell(e) {
   var book_id = $(e).attr('book_id');
   var price = $('#price').val();
+
     $.ajax({
       type: "PUT",
       url: "/user/books/selling",
       data: {book_id:book_id,price:price},
       success:function(h){
         selling.push(book_id);
-        $(e).addClass('selling');
         // get html for buy list
         // render html in the buy list.
         $(e).parent().parent().fadeOut();
-        $('#list-all').append(h.html);
+        $('#list-all').html(h.html);
       }
     })
 }
