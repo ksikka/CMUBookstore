@@ -23,7 +23,7 @@ function buildPriceDict(book_ids,prices) {
 }
 
 // returns a json with the html of the list
-var getBookList = function(req,res,action){
+var getBookList = function(req,res,action,callback){
   var listName = action+"ing_ids";
   var list2Name = action+"ing_prices";
   userFromSession = req.session.user;
@@ -36,9 +36,14 @@ var getBookList = function(req,res,action){
       console.log(priceDict);
       book.Book.find({"_id":{"$in":listOfIds}}).run(function(err,books){
         if(err){console.log(err);} else{
-        res.partial("book_list",{list:books,priceDict:priceDict,action:action},function(err,htmlString){
-          res.json({html:htmlString});
-        });}
+          if(callback) {
+            callback({list:books,priceDict:priceDict});
+          } else{
+          res.partial("book_list",{list:books,priceDict:priceDict,action:action},function(err,htmlString){
+            res.json({html:htmlString});
+          });
+          }
+        }
       });
     }
   });
@@ -46,6 +51,15 @@ var getBookList = function(req,res,action){
 
 exports.getBuyList = function(req,res){getBookList(req,res,"buy")};
 exports.getSellList = function(req,res){getBookList(req,res,"sell")};
+
+//bad code. this all needs refactoring. but i'll do it later.
+exports.getAllList = function(req,res){
+  getBookList(req,res,"buy",function(b){
+    getBookList(req,res,"sell",function(s){
+      res.json({buying:b,selling:s});
+    });
+  });
+}
 
 var removeFromBookList = function(req,res,action){
   var listName = action+"ing_ids";
@@ -120,3 +134,4 @@ exports.removeBookFromBuyList = function(req,res) {
 exports.removeBookFromSellList = function(req,res) {
   removeFromBookList(req,res,"sell");
 }
+
