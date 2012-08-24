@@ -23,10 +23,10 @@
        <%  } %>
 
         <form>
-    $<input type="text" name="price" />(must be 0 or higher, rounded to the nearest dollar)
-    <button onclick="buy(this)" book_id="<%= book._id.toString() %> "type="button">Buy</button>
-    <button onclick="sell(this)" book_id="<%= book._id.toString() %> "type="button">Sell</button>
-  </form>
+          $<input id="price" type="text" name="price" />(must be 0 or higher, rounded to the nearest dollar)
+          <button onclick="buy(this)" book_id="<%= book_id %>" type="button">Buy</button>
+          <button onclick="sell(this)" book_id="<%= book_id %>" type="button">Sell</button>
+        </form>
       <!-- <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a> -->
 
     </div>

@@ -73,11 +73,10 @@ function removeFromList(e,action) {
       url: '/user/books/'+action+'ing',
       data: {book_id:book_id},
       success:function(h){
-        console.log(h.html);
         $('#'+action+'-list').html(h.html);
-        console.log('remove from '+action+' list: '+book_id)
       }
     })
+  $(e).parent().fadeOut();
 }
 
 function viewMore(e) {
@@ -96,8 +95,10 @@ function viewMore(e) {
 }
 
 function buy(e) {
+  console.log("buy");
   var book_id = $(e).attr('book_id');
-  var price = $('#expanded_book input').val();
+  var price = $('#price').val();
+
     $.ajax({
       type: "PUT",
       url: "/user/books/buying",
@@ -107,15 +108,15 @@ function buy(e) {
         $(e).addClass('buying');
         // get html for buy list
         // render html in the buy list.
-        $('#search-results').append(h.html);
-        $(e).parent().fadeOut();
+        $(e).parent().parent().fadeOut();
+        $('#list-all').append(h.html);
       }
     })
 }
 
 function sell(e) {
   var book_id = $(e).attr('book_id');
-  var price = $('#expanded_book input').val();
+  var price = $('#price').val();
     $.ajax({
       type: "PUT",
       url: "/user/books/selling",
@@ -125,8 +126,8 @@ function sell(e) {
         $(e).addClass('selling');
         // get html for buy list
         // render html in the buy list.
-        $('#sell-list').html(h.html);
-        $.modal.close();
+        $(e).parent().parent().fadeOut();
+        $('#list-all').append(h.html);
       }
     })
 }
