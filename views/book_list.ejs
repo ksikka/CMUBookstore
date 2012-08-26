@@ -1,8 +1,10 @@
 <% for(var i = 0; i < list.length; i++) { %>
   <div class="listing">
-    <% var minmax = "min"; if(action === "buy"){ minmax = "max"; } %>
-    <%= list[i].title %>
-    Your <%= minmax %> notification price is $<%= priceDict[list[i]._id.toString()] %>.
-    <button onclick="removeFromList(this,'<%= action %>')" book_id=<%= list[i]._id %> >Del</button>
+  	<div class="details">
+	    <% var minmax = "min"; if(action === "buy"){ minmax = "max"; } %>
+	    <img class="tag" src="images/<%= action %>.png" ><h2><%= list[i].title %></h2>
+	    <h3>Your <%= minmax %> notification price is <span class="bold"> $<%= priceDict[list[i]._id.toString()] %> </span>.</h2>
+	    <span class="deletebutton" book_id="<%= list[i]._id %>" onclick="removeFromList(this,'<%= action %>')">	<img width="20px" src="images/delete.png"></span>
+	</div>
   </div>
 <% } %>

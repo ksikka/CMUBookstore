@@ -5,30 +5,31 @@
       <% var book = books[i] %>
       <% var book_id = book._id; %>
       <div class="papers" book_id="<%= book_id %>">
+        <div class="papers_content">
 
-      <div>
-        <span class="title"><%= book.title %></span>
-        <span class="author">by <%= book.author %></span>
+        <div>
+          <span class="title"><%= book.title %></span>
+          <span class="author">by <%= book.author %></span>
+        </div>
+
+          <% var courseStrings = []; %>
+          <% for(var j = 0; j < books[i].course_ids.length; j++) { 
+               var course = course_dictionary[books[i].course_ids[j]];
+               if(course) { 
+                 courseStrings.push(course._id + ': ' + course.name);
+               }
+             } 
+             if(courseStrings.length > 0) { %>
+             <div class="required">Required for <%= courseStrings.join(', ') %></div>
+         <%  } %>
+
+          <form>
+            $<input id="price" type="text" name="price" /><span class="detail">(must be 0 or higher, no decimals)</span>
+            <button onclick="buy(this)" book_id="<%= book_id %>" type="button" class="green">Buy</button>
+            <button onclick="sell(this)" book_id="<%= book_id %>" type="button" class="blue">Sell</button>
+          </form>
+        <!-- <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a> -->
       </div>
-
-        <% var courseStrings = []; %>
-        <% for(var j = 0; j < books[i].course_ids.length; j++) { 
-             var course = course_dictionary[books[i].course_ids[j]];
-             if(course) { 
-               courseStrings.push(course._id + ': ' + course.name);
-             }
-           } 
-           if(courseStrings.length > 0) { %>
-           <div>Required for <%= courseStrings.join(', ') %></div>
-       <%  } %>
-
-        <form>
-          $<input id="price" type="text" name="price" />(must be 0 or higher, rounded to the nearest dollar)
-          <button onclick="buy(this)" book_id="<%= book_id %>" type="button">Buy</button>
-          <button onclick="sell(this)" book_id="<%= book_id %>" type="button">Sell</button>
-        </form>
-      <!-- <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a> -->
-
     </div>
   <% } %>
 <% } %>

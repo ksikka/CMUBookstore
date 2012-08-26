@@ -66,17 +66,16 @@ function renderSearchResults(result) {
 }
 
 function removeFromList(e,action) {
-  console.log("hey");
   var book_id = $(e).attr('book_id');
   $.ajax({
       type: 'DELETE',
       url: '/user/books/'+action+'ing',
       data: {book_id:book_id},
       success:function(h){
-        $('#'+action+'-list').html(h.html);
+        //$('#'+action+'-list').html(h.html);
       }
     })
-  $(e).parent().fadeOut();
+    $(e).parent().parent().fadeOut();
 }
 
 function viewMore(e) {
@@ -144,12 +143,13 @@ $('document').ready(function(){
     complete: function(){$('#ajaxloader').hide()},
   });
 
-  $('form.search').keyup(function(){
+  $('form.search').keypress(function(e){
+    if(e.which == 13) {
     // TODO implement rate-limiting and local caching
     // for now, update state every single time.
-    var q = $('form.search').serialize();
-    getSearchResults(q
-      , renderSearchResults);
+      var q = $('form.search').serialize();
+      getSearchResults(q, renderSearchResults);
+    }
   });
 
   $('form.schedule').submit(function(){

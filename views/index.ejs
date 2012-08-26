@@ -46,7 +46,11 @@
   <!-- Delete everything in this .container and get started on your own site! -->
   <div class="bookshelf">
     <div class="top"></div>
-    <div class="middle"><div id="list-all"></div></div>
+    <div class="middle">
+      <div class="middle_container">
+        <div id="list-all"></div>
+      </div>
+    </div>
     <div class="bottom"></div>
   </div>
   <div class="container">
@@ -79,7 +83,8 @@
     }
   });
 
-  $('form.search').keyup(function(event){
+  $('form.search').keypress(function(e){
+    if(e.which == 13) {
       $("#course_number").animate({
         width:'120px',
         marginLeft:'0px'
@@ -102,9 +107,9 @@
           marginTop:'25px'
         }, 900)
 
-          $("hr").fadeOut();
+        $("hr").fadeOut();
 
-          $("#course_number").animate({
+        $("#course_number").animate({
           marginRight:'5px'
         }, 900);
 
@@ -120,6 +125,7 @@
         });
 
       });
+    }
   });
 </script>
 </html>

@@ -38,7 +38,7 @@
 
 	<div class="container">
 		<div class="paper">
-		<div class="nine columns" style="margin-top: 20px; padding-bottom:40px;">
+		<div class="nine columns" id="explanation" style="margin-top: 20px; padding-bottom:40px;">
 			<h1 class="remove-bottom">Tartan Textbooks</h1>
 			<hr />
 			<div class="two-third column">
@@ -59,7 +59,7 @@
 			<h4 style="margin-bottom:20px;">Get started</h4>
       <form action="/andrew" method="POST">
         <p><label style="display:inline; margin-right:15px;" for="andrew_id">Andrew ID</label>
-        <input name="andrew_id" type="text" id="regularInput" placeholder="" style="width:100px; display:inline;"/></p>
+        <input name="andrew_id" type="text" id="regularInput" placeholder="" style="width:100px; height:26px; display:inline;"/></p>
         <p><input name="password" type="password" id="regularInput" placeholder="Password"></p>
         <p><button type="submit">Go</button></p>
       </form>
@@ -75,9 +75,17 @@
               //if success if false, password?.
                 //if password, make password visible
                 //else, inject flash
+
             if(res.success) {
-              if(res.redirect === '/') document.location.reload(true);
+              $("#explanation").animate({
+                marginLeft:'-1000px'
+              }, 900);
+             
+              $(".loginpane").animate({
+                marginLeft:'-1000px'
+              }, 1300);
               document.location.href = res.redirect;
+              if(res.redirect === '/') document.location.reload(true);
             } else {
               if(res.password && !$('input[type="password"]').is(':visible')) {
                 $('input[type="password"]').show().focus();
@@ -117,21 +125,6 @@
 <script>
 $(".loginpane").animate({
     top:'0'
-  }, 1800);
-
-$("#loginbutton").click(
-  function() {
-      $("#explanation").animate({
-    marginLeft:'-1000px'
-   }, 900);
- 
-  $(".loginpane").animate({
-    marginLeft:'-400px'
-   }, 1300, function() {
-
-   		//CODE TO LOG IN HERE
-   });
-  }
-);
+  }, 1200);
 </script>
 </html>
