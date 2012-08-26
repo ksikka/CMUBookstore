@@ -7,7 +7,8 @@ var bookSchema = new Schema({
   title:String,
   author:String,
   isbn_old:String,
-  course_ids:[String]
+  course_ids:[String],
+  pricing:Array
 });
 // isbn number is used as the id
 bookSchema.virtual('isbn').get(function(){

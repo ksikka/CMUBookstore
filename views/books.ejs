@@ -21,13 +21,32 @@
              } 
              if(courseStrings.length > 0) { %>
              <div class="required">Required for <%= courseStrings.join(', ') %></div>
-         <%  } %>
+          <%  } %>
 
-          <form>
-            $<input class="price" type="text" name="price" /><span class="detail">(must be 0 or higher, no decimals)</span>
-            <button onclick="buy(this)" book_id="<%= book_id %>" type="button" class="green">Buy</button>
-            <button onclick="sell(this)" book_id="<%= book_id %>" type="button" class="blue">Sell</button>
-          </form>
+          <div class="expanded_book">
+            <div class="pricing">
+              <table>
+                <% if (typeof book.pricing != "undefined") { %>
+                <% for(var k = 0; k < book.pricing.length; k++) {  %>
+                <% var p = book.pricing[k]; %>
+                  <tr>
+                    <td><a href="<%= p.link %>" target="_blank"><%- p.store %></a></td>
+                    <td>$<%= p.price.toFixed(2) %></td>
+                  </tr>
+                  <% }} %>
+              </table>
+            </div>
+            <form>
+              <h3>Receive email notifcations:</h3>
+              <span class="q">what is this?</span>
+              <label>Max buying price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
+              <button onclick="buy(this)" book_id="<%= book_id %>" type="button" class="green">Buy</button>
+            </form>
+            <form>
+              <label>Min selling price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
+              <button onclick="sell(this)" book_id="<%= book_id %>" type="button" class="blue">Sell</button>
+            </form>
+          </div>
       </div>
     </div>
   <% } %>
