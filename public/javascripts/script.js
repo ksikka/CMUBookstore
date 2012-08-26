@@ -106,7 +106,7 @@ function buy(e) {
         buying.push(book_id);
         // get html for buy list
         // render html in the buy list.
-        $(e).parent().parent().fadeOut();
+        $(e).parent().parent().parent().fadeOut();
         $('#list-all').html(h.html);
       }
     })
