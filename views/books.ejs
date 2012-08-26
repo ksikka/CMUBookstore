@@ -24,11 +24,10 @@
          <%  } %>
 
           <form>
-            $<input id="price" type="text" name="price" /><span class="detail">(must be 0 or higher, no decimals)</span>
+            $<input class="price" type="text" name="price" /><span class="detail">(must be 0 or higher, no decimals)</span>
             <button onclick="buy(this)" book_id="<%= book_id %>" type="button" class="green">Buy</button>
             <button onclick="sell(this)" book_id="<%= book_id %>" type="button" class="blue">Sell</button>
           </form>
-        <!-- <a onclick="viewMore(this)" href="#" book_id="<%= book_id %>">more info</a> -->
       </div>
     </div>
   <% } %>

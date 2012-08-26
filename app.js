@@ -68,8 +68,9 @@ app.post('/user',users.set_password);
 app.get('/search',auth.requiresAuth,search.search);
 
 app.get('/user/books',auth.requiresAuth, books.getAllList);
-app.get('/user/books/buying',auth.requiresAuth, books.getBuyList);
-app.get('/user/books/selling',auth.requiresAuth, books.getSellList);
+//HACK
+app.get('/user/books/buying',auth.requiresAuth, books.getAllList);
+app.get('/user/books/selling',auth.requiresAuth, books.getAllList);
 
 app.put('/user/books/buying',auth.requiresAuth, books.addBookToBuyList);
 app.put('/user/books/selling',auth.requiresAuth, books.addBookToSellList);
