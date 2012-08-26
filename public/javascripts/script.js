@@ -1,25 +1,3 @@
-/********************************************
- * Def'ns:
- * 1. A textbook is an isbn, as well as the html
- * which renders it on the search result page.
- * 2. A query is a course_number, course_name,
- * and textbook_name.
- *
- * When a user types in the search fields, a
- * function gets the data from either a local
- * cache or by requesting from the server. The
- * input is a "query" and the output is a list
- * of app_ids and the html to render the results,
- *
- * The search-result html has links to buy and sell,
- * which execute the buy and sell functions. Eg,
- * when the buy function is executed, the book_id
- * is added to the buy list, a put request is made to
- * the server, the search-results are modified, 
- * and the buylist ui is rendered.
- * /
-
-/* State Variables */
 var query = {};
 var searchResults = [];
 var buying = [];
@@ -29,13 +7,7 @@ var loggedIn;
 
 function initializeLists() {
   $.get('/user/books/buying',function(h){
-    var initial_content = h.html;
-
-    $.get('/user/books/selling',function(h){
-      initial_content += h.html;
-      //$('#sell-list').html(h.html);
-      $('#list-all').html(initial_content);
-    });
+      $('#list-all').html(h.html);
   });
 }
 
@@ -81,12 +53,6 @@ function removeFromList(e,action) {
 function viewMore(e) {
   var book_id = $(e).attr("book_id");
   $.get("/books/"+book_id, function(data){
-    // create a modal dialog with the data
-    // $(data).modal({
-    //   overlayClose:true
-
-    // });
-
      console.log(data);
      //e.append(data);
      $(e).parent().append(data);
@@ -96,7 +62,7 @@ function viewMore(e) {
 function buy(e) {
   console.log("buy");
   var book_id = $(e).attr('book_id');
-  var price = $('#price').val();
+  var price = $(e).siblings('.price').val();
 
     $.ajax({
       type: "PUT",
@@ -106,7 +72,7 @@ function buy(e) {
         buying.push(book_id);
         // get html for buy list
         // render html in the buy list.
-        $(e).parent().parent().fadeOut();
+        $(e).parent().parent().parent().fadeOut();
         $('#list-all').html(h.html);
       }
     })
@@ -114,7 +80,7 @@ function buy(e) {
 
 function sell(e) {
   var book_id = $(e).attr('book_id');
-  var price = $('#price').val();
+  var price = $(e).siblings('.price').val();
 
     $.ajax({
       type: "PUT",
@@ -124,7 +90,7 @@ function sell(e) {
         selling.push(book_id);
         // get html for buy list
         // render html in the buy list.
-        $(e).parent().parent().fadeOut();
+        $(e).parent().parent().parent().fadeOut();
         $('#list-all').html(h.html);
       }
     })

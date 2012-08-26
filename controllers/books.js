@@ -36,13 +36,12 @@ var getBookList = function(req,res,action,callback){
       console.log(priceDict);
       book.Book.find({"_id":{"$in":listOfIds}}).run(function(err,books){
         if(err){console.log(err);} else{
-          if(callback) {
-            callback({list:books,priceDict:priceDict});
-          } else{
           res.partial("book_list",{list:books,priceDict:priceDict,action:action},function(err,htmlString){
-            res.json({html:htmlString});
+            if(callback)
+              callback({html:htmlString});
+            else
+              res.json({html:htmlString});
           });
-          }
         }
       });
     }
@@ -53,13 +52,14 @@ exports.getBuyList = function(req,res){getBookList(req,res,"buy")};
 exports.getSellList = function(req,res){getBookList(req,res,"sell")};
 
 //bad code. this all needs refactoring. but i'll do it later.
-exports.getAllList = function(req,res){
+function getAllList(req,res){
   getBookList(req,res,"buy",function(b){
     getBookList(req,res,"sell",function(s){
-      res.json({buying:b,selling:s});
+      res.send({ html: (b.html+s.html) });
     });
   });
 }
+exports.getAllList = getAllList;
 
 var removeFromBookList = function(req,res,action){
   var listName = action+"ing_ids";
@@ -83,7 +83,7 @@ var removeFromBookList = function(req,res,action){
         if(err) { console.log(err); }
         else {
           // could be done more efficiently, but whatever, not too expensive
-          getBookList(req,res,action);
+          getAllList(req,res);
         }
       });
     }
@@ -112,7 +112,7 @@ var addToBookList = function(req,res,action){
         if(err) { console.log(err); }
         else {
           // could be done more efficiently, but whatever, not too expensive
-          getBookList(req,res,action);
+          getAllList(req,res);
         }
       });
     }
