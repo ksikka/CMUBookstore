@@ -1,15 +1,12 @@
 How to get this running:
 
-
-1. Run <code>git checkout ui</code>
-2. Get the "secrets.js" file from repo owner, move it to the root of this repo
-3. Get the "mongodump" from repo owner and mongorestore it into an instance of mongodb
-4. Run <code>node app.js</code>
+1. Run git checkout ui
+2. Get the secrets.js file from a contributor and move it to the root of this repo
+3. Get the mongodump from a contributor and mongorestore it into an instance of mongodb
+4. Run npm install -d
+4. Run node app.js
 
 TODOs:
-(As of 8/21/12)
--Parse the scraped pricing data of the textbooks
+(As of 8/26/12)
 -Implement new view for a search-result
--Implement a simple design for the user-book-list
--Design/css magic so it doesn't look like a scrappy project
 -Informal testing
