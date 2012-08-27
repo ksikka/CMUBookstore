@@ -24,10 +24,23 @@
           <%  } %>
 
           <div class="expanded_book">
+            <div class="buysell">
+              <form onsubmit="return buy(this)" book_id="<%= book_id %>">
+                <h3>Live email notifications:</h3>
+                <span class="q">what is this?</span>
+                <label>Max buying price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
+                <button type="submit" class="green">Buy</button>
+              </form>
+              <form onsubmit="return sell(this)" book_id="<%= book_id %>">
+                <label>Min selling price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
+                <button type="submit" class="blue">Sell</button>
+              </form>
+            </div>
             <div class="pricing">
+              <h3>Shop online:</h3>
               <table>
                 <% if (typeof book.pricing != "undefined") { %>
-                <% for(var k = 0; k < book.pricing.length; k++) {  %>
+                <% for(var k = 0; k < Math.min(5,book.pricing.length); k++) {  %>
                 <% var p = book.pricing[k]; %>
                   <tr>
                     <td><a href="<%= p.link %>" target="_blank"><%- p.store %></a></td>
@@ -36,16 +49,7 @@
                   <% }} %>
               </table>
             </div>
-            <form>
-              <h3>Receive email notifcations:</h3>
-              <span class="q">what is this?</span>
-              <label>Max buying price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
-              <button onclick="buy(this)" book_id="<%= book_id %>" type="button" class="green">Buy</button>
-            </form>
-            <form>
-              <label>Min selling price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
-              <button onclick="sell(this)" book_id="<%= book_id %>" type="button" class="blue">Sell</button>
-            </form>
+            <div style="clear:both"></div>
           </div>
       </div>
     </div>

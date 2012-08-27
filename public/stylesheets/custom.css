@@ -211,7 +211,7 @@ input.large_box
         7px 7px   0 rgba(0,   0,   0,   0.150), 
         9px 9px   0 rgba(255, 255, 255, 1.0),  
         10px 10px 0 rgba(0,   0,   0,   0.175);
-  box-shadow: 
+  box-shadow:
         1px 1px   0 rgba(0,   0,   0,   0.100), 
         3px 3px   0 rgba(255, 255, 255, 1.0), 
         4px 4px   0 rgba(0,   0,   0,   0.125), 
@@ -219,7 +219,6 @@ input.large_box
         7px 7px   0 rgba(0,   0,   0,   0.150), 
         9px 9px   0 rgba(255, 255, 255, 1.0),  
         10px 10px 0 rgba(0,   0,   0,   0.175);
-    
   margin-left:0px;
   -webkit-transition: all .2s ease-in;
   -moz-transition: all .2s ease-in;
@@ -231,9 +230,42 @@ input.large_box
 .papers_content {
   position: relative;
   padding-left: 10px;
+  padding-top: 10px;
 }
 .papers:hover {
-  height: 150px;
+  height: 280px;
+}
+
+.buysell,.pricing {
+  float:left;
+  width:200px;
+}
+.pricing {
+  margin-left:40px;
+  padding-left:20px;
+  border-left: solid 1px #dedede;
+}
+.pricing table {
+  font-size:.9em;
+}
+.pricing table tr { margin-bottom:2px;}
+.pricing table tr td:first-child {
+  width:150px;
+}
+
+.expanded_book h3 {
+  font-size:1.2em;
+  margin-bottom:0
+}
+.expanded_book form{ margin-bottom: 10px; }
+.buysell form button { float:right; margin: 0; }
+.buysell form input { width:4em; margin: auto 15px auto 5px; }
+.expanded_book {
+  margin-top:25px;
+}
+
+.buysell .q {
+  font-size:.75em;
 }
 
 .papers_content .title {
@@ -251,10 +283,6 @@ input.large_box
 .papers_content .detail {
   font-size: 10px;
   color: #999;
-}
-
-.papers_content form {
-  margin-top: 50px;
 }
 
 .papers_content .required {

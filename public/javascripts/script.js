@@ -32,7 +32,6 @@ function fixSearchBindings() {
 
 // also probably not necessary
 function renderSearchResults(result) {
-  console.log(result);
   $('#search-results').html(result.html);
   fixSearchBindings();
 }
@@ -60,40 +59,41 @@ function viewMore(e) {
 }
 
 function buy(e) {
-  console.log("buy");
   var book_id = $(e).attr('book_id');
-  var price = $(e).siblings('.price').val();
+  var price = $(e).children('.price').val();
 
-    $.ajax({
-      type: "PUT",
-      url: "/user/books/buying",
-      data: {book_id:book_id,price:price},
-      success:function(h){
-        buying.push(book_id);
-        // get html for buy list
-        // render html in the buy list.
-        $(e).parent().parent().parent().fadeOut();
-        $('#list-all').html(h.html);
-      }
-    })
+  $.ajax({
+    type: "PUT",
+    url: "/user/books/buying",
+    data: {book_id:book_id,price:price},
+    success:function(h){
+      buying.push(book_id);
+      // get html for buy list
+      // render html in the buy list.
+      $(e).parent().parent().parent().parent().fadeOut();
+      $('#list-all').html(h.html);
+    }
+  });
+  return false;
 }
 
 function sell(e) {
   var book_id = $(e).attr('book_id');
-  var price = $(e).siblings('.price').val();
+  var price = $(e).children('.price').val();
 
-    $.ajax({
-      type: "PUT",
-      url: "/user/books/selling",
-      data: {book_id:book_id,price:price},
-      success:function(h){
-        selling.push(book_id);
-        // get html for buy list
-        // render html in the buy list.
-        $(e).parent().parent().parent().fadeOut();
-        $('#list-all').html(h.html);
-      }
-    })
+  $.ajax({
+    type: "PUT",
+    url: "/user/books/selling",
+    data: {book_id:book_id,price:price},
+    success:function(h){
+      selling.push(book_id);
+      // get html for buy list
+      // render html in the buy list.
+      $(e).parent().parent().parent().parent().fadeOut();
+      $('#list-all').html(h.html);
+    }
+  });
+  return false;
 }
 
 
