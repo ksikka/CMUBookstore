@@ -18,7 +18,6 @@ exports.logout = function(req,res){
   req.session.save(function(err){
     if(err){ console.log(err); }
     else{
-      console.log("Logged out " + siteUser);
       req.flash('info','Logged out successfully');
       res.redirect('home');
     }
@@ -30,9 +29,10 @@ function handleEmail(req,res,doc) {
   //person has not yet initialized account, send them a confirmation email
   if(doc.email_count <= EMAIL_LIMIT) {
     console.log('yes.');
-    body = "If you did not just enter your Andrew ID to Tartan Textbooks, please skip to the section labeled, reporting spam.<br><br> Thanks for visiting Tartan Textbooks, the best way to buy and sell textbooks online! We're sending you this email to confirm that you are who you say you are. Click the link to set your account password: <a href=\""+baseUrl+"/confirm/"+doc.andrew_id+"/"+doc._id.toString()+"\">link</a>. Once your password is set, you will not be able to change it, so please type carefully. Note that having a password is optional, but highly recommended. <br> From the Tartan Textbooks team, we hope you enjoy the site. And remember, buy low and sell high :)";
-    email.send( ""+doc.email, "Continue Tartan Textbooks signup", body,function(er){
-      console.log(er);
+    var conf_url = baseUrl+"/confirm/"+doc.andrew_id+"/"+doc._id.toString();
+    var link_string = "<a href=\""+conf_url+"\">"+conf_url+"</a>";
+    email.send( ""+doc.email, "Welcome! Set your password.", email.body(link_string),function(er){
+      console.log("Email error:" + er);
       doc.email_count++;
       doc.created_at = new Date();
       doc.save(function(err){
@@ -57,16 +57,12 @@ exports.login = function(req,res){
   var andrew_id = req.body.andrew_id;
   var password = req.body.password;
   if(!password) password = "";
-  console.log('Received '+req.body.andrew_id);
   andrew_id = trim(andrew_id.toLowerCase());
   user.User.findOne({"andrew_id":andrew_id}).run(function(err,doc){
-    console.log('is this in the db?');
     if(doc){
-      console.log('yes. has it been initialized?');
       if(!doc.created_at) {
         handleEmail(req,res,doc);
       } else {
-        console.log('yes');
         //account was already initialized, now check password
         if (!doc.password){
           authorize(doc,req,res);
@@ -74,7 +70,6 @@ exports.login = function(req,res){
           bcrypt.compare(password, doc.password, function(err, equality) {
             if (err) {console.log(err); req.flash('error','server error, see logs'); res.redirect('home'); } else {
               if(!equality) {
-                console.log('password doesnt match');
                 res.send({success:false, flash:"Wrong password", password:true})
               } else {
                 authorize(doc,req,res);
@@ -85,7 +80,6 @@ exports.login = function(req,res){
       }
     }
     else{
-      console.log('no');
       res.send({success:false, flash:"Andrew ID error"});
     }
   });

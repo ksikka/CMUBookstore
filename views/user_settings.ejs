@@ -1,7 +1,138 @@
-<h1>Set a password</h1>
-<form method="POST" action="/user">
-  <label>Username<h3 style="display:inline"><%= user.andrew_id %></h3></label><br />
-  <input type="hidden" value="<%= user._id.toString() %>" name="emailconf" />
-  <label>Password<input type="password" name="password"/></label><br />
-  <button type="submit">Continue</button>
-</form>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<meta charset="utf-8">
+	<title>Tartan Textbooks</title>
+  <meta name="description" content="One-stop shop for all your textbook needs. Search, compare, list, and buy. Carnegie Mellon University.">
+	<meta name="author" content="Karan Sikka, Ilter Canberk, Matt Schallert">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="/stylesheets/base.css">
+	<link rel="stylesheet" href="/stylesheets/skeleton.css">
+	<link rel="stylesheet" href="/stylesheets/layout.css">
+	<link rel="stylesheet" href="/stylesheets/custom.css">
+	<link rel="stylesheet" href="/stylesheets/animations.css">
+
+	<!--[if lt IE 9]>
+		<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<link rel="shortcut icon" href="/images/favicon.ico">
+	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+	<link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'> <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+</head>
+<body style="background: url('/images/background.png')  center center fixed;" >
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<div class="container">
+		<div class="paper">
+		<div class="nine columns" id="explanation" style="margin-top: 20px; padding-bottom:40px;">
+			<h1 class="remove-bottom">Tartan Textbooks</h1>
+			<hr />
+			<div class="two-third column">
+			<h3>Now at Carnegie Mellon</h3>
+      <p><ul>
+        <li>Search by course or textbook</li>
+        <li>Attach a link to your schedule</li>
+        <li>Compare prices online</li>
+        <li>Buy textbooks directly from students on campus</li>
+        <li>Sell textbooks quickly and easily</li>
+      </ul></p>
+		</div>
+		</div>
+		</div>
+
+		<div class="paper loginpane">
+		<div class="four columns" style="margin-top: 96px">
+			<h4 style="margin-bottom:20px;">Set a password</h4>
+      <form action="/user" method="POST">
+        <p><label style="display:inline; margin-right:15px;" for="password">Password</label>
+        <input name="password" type="password" id="regularInput" placeholder="" style="width:100px; height:26px; display:inline;"/></p>
+        <p><button type="submit">Save</button></p>
+        <input type="hidden" value="<%= user._id.toString() %>" name="emailconf" />
+      </form>
+      <!-- AJAX Login and Flash Messages -->
+      <script>
+      $('document').ready(function(){
+        $('form').submit(function(){
+          var self = this;
+          $.post('/user',$(self).serialize(), function(res){
+            //success field will always be present
+              //redirect field is present iff success is true.
+              //if success if false, password?.
+                //if password, make password visible
+                //else, inject flash
+
+            if(res.redirect === '/') {
+              $("#explanation").animate({
+                marginLeft:'-1000px'
+              }, 900);
+              $(".loginpane").animate({
+                marginLeft:'-1000px'
+              }, 1300);
+              document.location.reload(true);
+            } else {
+              alert("Password can't be blank.");
+            }
+          });
+          return false;
+        });
+      });
+      </script>
+      <div id="flash_messages">
+        <% if(!(typeof flash ==="undefined")) { %>
+          <% var errors = flash.error || []; %>
+          <% for(var i = 0; i < errors.length; i++) { %>
+            <div class="error"><%= errors[i] %></div>
+          <% } %>
+
+          <% var infos = flash.info || []; %>
+          <% for(var i = 0; i < infos.length; i++) { %>
+            <div class="info"><%= infos[i] %></div>
+          <% } %>
+        <% } %>
+      </div>
+		</div>
+
+		
+
+		</div>
+	</div><!-- container -->
+
+  <style>
+    footer {
+      position:absolute;
+      bottom:0;
+      height:30px;
+      font-style:italic;
+      text-align:center;
+      width:100%;
+      font-size:.85em;
+    }
+  </style>
+
+  <footer>
+  &copy;2012-2013
+  </footer>
+
+<!-- End Document
+================================================== -->
+</body>
+<script>
+$(".loginpane").animate({
+    top:'0'
+  }, 1200);
+</script>
+</html>

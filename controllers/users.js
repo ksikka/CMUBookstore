@@ -35,32 +35,30 @@ exports.create_page = function(req,res){
 exports.set_password = function(req,res){
   id = req.body.emailconf;
   password = req.body.password;
-  // do validations on the password
-  // store the password in the database
-  user.User.findOne({_id:id},function(err,user){
-    if(err) {
-      console.log(err);
-      res.send("",500);
-    } else {
-      if(user && user.created_at && !user.password) {
-        bcrypt.genSalt(10, function(err, salt) {
-          bcrypt.hash(password, salt, function(err, hash) {
-            // Store hash
-            user.password = hash;
-            user.created_at = new Date();
-            user.selling_ids = [];
-            user.buying_ids = []
-            user.last_login = null;
-            user.save(function(){
-              req.body.andrew_id = user.andrew_id;
-              req.body.password = password;
-              auth.login(req,res);
+  if(!password) {
+    res.send("Password can't be blank",404);
+  } else {
+    user.User.findOne({_id:id},function(err,user){
+      if(err) {
+        console.log(err);
+        res.send("",500);
+      } else {
+        if(user && user.created_at && !user.password) {
+          bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+              // Store hash
+              user.password = hash;
+              user.save(function(){
+                req.body.andrew_id = user.andrew_id;
+                req.body.password = password;
+                auth.login(req,res);
+              });
             });
           });
-        });
-      } else {
-        res.send("Sorry.",404);
+        } else {
+          res.send("Sorry.",404);
+        }
       }
-    }
-  });
+    });
+  }
 }

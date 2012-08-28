@@ -104,7 +104,7 @@ $('document').ready(function(){
 
   /* Hide the ajax-loader image */
   $.ajaxSetup({
-    error: function(a,b,c) { console.log(a); console.log(b); console.log(c); alert('Error: See logs'); },
+    error: function(a,b,c) { console.log(a+':\n'+c); alert('Sorry there was an error. Contact ksikka@cmu.edu if the problem persists.'); },
     beforeSend: function(){$('#ajaxloader').show()},
     complete: function(){$('#ajaxloader').hide()},
   });

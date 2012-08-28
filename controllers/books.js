@@ -96,7 +96,7 @@ var addToBookList = function(req,res,action){
   // TODO validate price
   var siteUser = req.session.user;
   var book_id = parseInt(req.body.book_id);
-  var minmaxprice = parseInt(req.body.price);
+  var minmaxprice = parseInt(req.body.price,10);
   book.Book.findOne({"_id":book_id}).run(function(err,doc) {
     if(!doc) {
       res.send("Not a valid book",500);
