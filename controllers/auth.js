@@ -122,6 +122,7 @@ exports.requiresAuth = function(req,res,next) {
 
 // the right way to do this all
 exports.ifAuthElse = function(req,res,cb1,cb2) {
+  console.log(req);
   if(req.session.user) {
     cb1(req,res);
   } else {

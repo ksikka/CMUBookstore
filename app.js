@@ -5,7 +5,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , secrets = require('./secrets.js');
 
 mongoose.connect('mongodb://localhost/textbooks');
 
@@ -18,7 +19,8 @@ app.configure(function(){
   app.set('view engine', 'ejs');
 
   app.use(express.cookieParser());
-  app.use(express.session({ secret: "a super secretive secret" }));
+
+  app.use(express.session({ secret: secrets.cookieSecret }));
 
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -43,12 +45,6 @@ var search = require('./controllers/search')
 var schedplus = require('./scheduleplus.js');
 
 // Routes
-/*
-app.post('/extract',function(req,res){
-    var surl = req.body.surl;
-    console.log(surl);
-    schedplus.scrape(surl,res);
-});*/
 
 app.get('/',function(req,res){
   auth.ifAuthElse(req,res
