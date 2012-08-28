@@ -8,20 +8,21 @@ function send(to_address, subject, body, callback) {
     host : "smtp.sendgrid.net",
     port : "587",
     domain : "tartantextbooks.com",
-    to : to_address,
+    to : "" + to_address,
     from : "admin@tartantextbooks.com",
     subject : subject + " - Tartan Textbooks",
-    html: body,
+    html: "" + body,
     authentication : "login",
     username : sgusername,
     password : sgpassword
   },
   function(err, result){
     if(err){
-      console.log(err);
+      console.log("Error: "err);
+      console.log("Result: "+result);
     }
     else {
-      console.log(result);
+      console.log("Result: "+result);
       if(callback)
         callback();
     }
@@ -48,7 +49,7 @@ function incrementalEmail(action, user, book, matchingUser,callback){
              matchingUser.email + " or wait for him or her to contact you."+"<br><br>"+
              "Cheers,<br>Tartan Textbooks";
   }
-  send(to_address, subject, body, callback);
+  send(""+to_address, ""+subject, ""+body, callback);
 }
 
 function initialEmail(action, currentUser, book, matching_users,callback){
