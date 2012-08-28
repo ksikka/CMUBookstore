@@ -1,8 +1,9 @@
 var email = require("mailer");
 var credentials = require("./secrets");
+var user = require("./models/user.js");
 var sgusername = credentials.sendgrid_username;
 var sgpassword = credentials.sendgrid_password;
-exports.send = function(to_address, subject, body, callback) {
+function send(to_address, subject, body, callback) {
  email.send({
     host : "smtp.sendgrid.net",
     port : "587",
@@ -21,11 +22,91 @@ exports.send = function(to_address, subject, body, callback) {
     }
     else {
       console.log(result);
-      callback();
+      if(callback)
+        callback();
     }
   }
 )};
+exports.send = send;
 
+function incrementalEmail(action, user, book, matchingUser,callback){
+  var to_address = user.email;
+  var buying = (action === "buy") ? true : false;
+  var subject = buying ? "Someone wants to buy your book" : "Someone listed a book";
+  var name = user.name;
+  var body = "";
+  if(buying) {
+    body = "Hey "+ name + ",<br>"+
+             "<br>" + matchingUser.name + " may be interested in buying your textbook: "+
+             book.title + ". You can contact " + matchingUser.andrew_id + " by email at " +
+             matchingUser.email + " or wait for him or her to contact you."+"<br><br>"+
+             "Cheers,<br>Tartan Textbooks";
+  } else {
+    body = "Hey "+ name + ",<br>"+
+             "<br>" + matchingUser.andrew_id + " may be interested in selling a textbook to you: "+
+             book.title + ". You can contact " + matchingUser.andrew_id + " by email at " +
+             matchingUser.email + " or wait for him or her to contact you."+"<br><br>"+
+             "Cheers,<br>Tartan Textbooks";
+  }
+  send(to_address, subject, body, callback);
+}
+
+function initialEmail(action, currentUser, book, matching_users,callback){
+  var to_address = currentUser.email;
+  var buying = (action === "buy") ? true : false;
+  var subject = "Your textbook listing";
+  var name = currentUser.name;
+  function oneLine(u) { return u.name + ": " + u.email; }
+  function allLines(us) {
+    var s = "";
+    for(var i = 0; i < us.length; i++) { s += oneLine(us[i]) + "<br>" ; }
+    return s;
+  }
+  var body = "";
+  if (matching_users.length === 0 && buying) {
+    body = "Thanks for listing " + book.title + ". We'll send you an email as soon as " +
+           "people list this book for sale within your price range. Good luck!" + "<br><br>" +
+           "Cheers, <br>Tartan Textbooks";
+  } else if (matching_users.length > 0 && buying) {
+    body = "You listed that you're in the market for " + book.title + ". The following students " + 
+           "are interested in selling this textbook within your price range: " + "<br><br>" +
+           allLines(matching_users) + "<br>" +
+           "Cheers, Tartan Textbooks";
+  } else if (matching_users.length === 0 && !buying) {
+    body = "Thanks for listing " + book.title + ". We'll send you an email as soon as " +
+           "someone wants to buy it above your minimum selling price. Good luck!" + "<br><br>" +
+           "Cheers, <br>Tartan Textbooks";
+  } else if (matching_users.length > 0 && !buying) {
+    body = "You listed that you're selling " + book.title + ". The following students " + 
+           "are interested in buying this textbook above your min. selling price: " + "<br><br>" +
+           allLines(matching_users) + "<br>" +
+           "Cheers, Tartan Textbooks";
+  }
+  send(to_address, subject, body, callback);
+}
+
+exports.notifyUsers = function(currentUser,action,book,price) {
+  var isbn = book._id;
+  //assumes buying action
+  // find users who have book AND price in range
+  user.User.find({"buying_ids":isbn},function(matching_users){
+    if(!matching_users) matching_users = [];
+    for(var i = 0; i < matching_users.length; i++) {
+      var user = matching_users[i];
+      var bookIndex = user.buying_ids.indexOf(isbn);
+      var matching_price = user.buying_prices[bookIndex];
+      // delete users where price is out of range
+      if(matching_price < price) {
+        matching_users.splice(i,1);
+      } else {
+        //else, user cares, so send an email asynchronously
+        incrementalEmail(action, user, book, currentUser);
+      }
+    }
+
+    initialEmail(action, currentUser, book, matching_users);
+  });
+}
 
 exports.body = function(link_string) {
   body_string = ("" +

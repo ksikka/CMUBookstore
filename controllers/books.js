@@ -1,5 +1,6 @@
 var user = require('../models/user'),
     book = require('../models/book');
+    email = require('../email.js');
 
 exports.expandedView = function(req,res,action){
   var book_id = req.params.isbn;
@@ -112,6 +113,7 @@ var addToBookList = function(req,res,action){
         if(err) { console.log(err); }
         else {
           // could be done more efficiently, but whatever, not too expensive
+          email.notifyUsers(siteUser,action,doc,minmaxprice);
           getAllList(req,res);
         }
       });
