@@ -27,8 +27,9 @@ function getSearchResults(q,callback) {
 }
 
 function fixSearchBindings() {
-  $('.papers').click(function(){
-    $(this).toggleClass('expanded');
+  $('.papers:not(.expanded)').click(function(){
+    $('.papers.expanded').removeClass('expanded');
+    $(this).addClass('expanded');
   });
 }
 

@@ -59,13 +59,11 @@
         <h2 class="bevel">Search for your books by...</h2>
 
       <form class="search" method="GET" action="/search">
-        <input type="text" id="scheduleurl" name="surl" class="large_box" placeholder="Paste the URL of your ScheduleMan or Schedule +">
-        <hr id="hr">
         <input type="text" id="course_number" name="course_number" class="large_box" placeholder="Course number">
-        <hr id="hr">
         <input type="text" id="course_name" name="course_name" class="large_box" placeholder="Course name">
-        <hr id="hr">
         <input type="text" id="textbook_name" name="textbook_name" class="large_box" placeholder="Textbook name">
+        <hr id="hr">
+        <input type="text" id="scheduleurl" name="surl" class="large_box" placeholder="Paste the URL of your ScheduleMan or Schedule +">
       </form>
     </div>
     <div class="nine columns item_list" id="search-results">
@@ -88,20 +86,6 @@
 
   $('form.search').keypress(function(e){
     if(e.which == 13) {
-      $("#course_number").animate({
-        width:'120px',
-        marginLeft:'0px'
-      }, 900);
-
-      $("#course_name").animate({
-        width:'120px'
-      }, 900);
-
-      $("#textbook_name").animate({
-        width:'120px',
-        marginRight:'0px'
-      }, 900, function() {
-
         $(".bevel").animate({
           paddingBottom:'10px'
         }, 900);
@@ -110,24 +94,7 @@
           marginTop:'25px'
         }, 900)
 
-        $("hr").fadeOut();
-
-        $("#course_number").animate({
-          marginRight:'5px'
-        }, 900);
-
-        $("#course_name").animate({
-          marginRight:'5px',
-          marginLeft:'5px'
-        }, 900);
-
-        $("#textbook_name").animate({
-          marginLeft:'5px'
-        }, 900, function() {
-          $(".large_box").css("display","inline-block");
-        });
-
-      });
+        $("hr").slideUp();
     }
   });
 
