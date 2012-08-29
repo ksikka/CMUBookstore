@@ -236,6 +236,10 @@ input.large_box
   padding-top: 10px;
 }
 .papers:hover {
+  /* make the paper look clickable */
+  background-color: #EFEFEF;
+}
+.papers.expanded  {
   height: 280px;
 }
 

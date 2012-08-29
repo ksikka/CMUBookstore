@@ -27,7 +27,9 @@ function getSearchResults(q,callback) {
 }
 
 function fixSearchBindings() {
-  // probably not even necessary but whatever. // TODO implement
+  $('.papers').click(function(){
+    $(this).toggleClass('expanded');
+  });
 }
 
 // also probably not necessary
