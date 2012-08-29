@@ -12,6 +12,7 @@ function send(to_address, subject, body, callback) {
     console.log('To: '+ to_address);
     console.log('Subject: ' + subject);
     console.log('Body: ' + body);
+    if(callback) callback();
   } else {
     email.send({
       host : "smtp.sendgrid.net",
