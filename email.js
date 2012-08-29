@@ -3,34 +3,41 @@ var credentials = require("./secrets");
 var user = require("./models/user.js");
 var sgusername = credentials.sendgrid_username;
 var sgpassword = credentials.sendgrid_password;
+
+var devMode = false;
+exports.devMode = function() { devMode = true; };
+
 function send(to_address, subject, body, callback) {
-  /*console.log('To: '+ to_address);
-  console.log('Subject: ' + subject);
-  console.log('Body: ' + body);*/
-  email.send({
-    host : "smtp.sendgrid.net",
-    port : "587",
-    domain : "tartantextbooks.com",
-    to : "" + to_address,
-    from : "admin@tartantextbooks.com",
-    subject : subject + " - Tartan Textbooks",
-    html: "" + body,
-    authentication : "login",
-    username : sgusername,
-    password : sgpassword
-  },
-  function(err, result){
-    if(err){
-      console.log("Error: "+err);
-      console.log("Result: "+result);
-    }
-    else {
-      console.log("Result: "+result);
-      console.log("Sent an email to " + to_address);
-      if(callback)
-        callback();
-    }
-  });
+  if(devMode) {
+    console.log('To: '+ to_address);
+    console.log('Subject: ' + subject);
+    console.log('Body: ' + body);
+  } else {
+    email.send({
+      host : "smtp.sendgrid.net",
+      port : "587",
+      domain : "tartantextbooks.com",
+      to : "" + to_address,
+      from : "admin@tartantextbooks.com",
+      subject : subject + " - Tartan Textbooks",
+      html: "" + body,
+      authentication : "login",
+      username : sgusername,
+      password : sgpassword
+    },
+    function(err, result){
+      if(err){
+        console.log("Error: "+err);
+        console.log("Result: "+result);
+      }
+      else {
+        console.log("Result: "+result);
+        console.log("Sent an email to " + to_address);
+        if(callback)
+          callback();
+      }
+    });
+  }
 }
 exports.send = send;
 

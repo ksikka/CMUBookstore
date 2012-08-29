@@ -6,7 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , mongoose = require('mongoose')
-  , secrets = require('./secrets.js');
+  , secrets = require('./secrets.js')
+  , email = require('./email.js');
 
 mongoose.connect('mongodb://localhost/textbooks');
 
@@ -30,6 +31,7 @@ app.configure(function(){
 
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  email.devMode();
 });
 
 app.configure('production', function(){

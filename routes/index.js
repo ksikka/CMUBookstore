@@ -4,9 +4,9 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Tartan Texbooks	', user:req.session.user, flash:req.flash() });
+  res.render('index', { title: 'Tartan Textbooks	', user:req.session.user, flash:req.flash() });
 };
 
 exports.prettysplash = function(req,res){
-  res.render('home', { title: 'Tartan Texbooks', flash:req.flash() });
+  res.render('home', { title: 'Tartan Textbooks', flash:req.flash() });
 };
