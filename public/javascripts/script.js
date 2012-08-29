@@ -31,6 +31,10 @@ function fixSearchBindings() {
     $('.papers.expanded').removeClass('expanded');
     $(this).addClass('expanded');
   });
+
+  $('.papers.expanded').click({
+    $('.papers.expanded').removeClass('expanded');
+  });
 }
 
 // also probably not necessary
