@@ -44,6 +44,25 @@
   <!-- Primary Page Layout
   ================================================== -->
 
+  <div id="modalbackground">
+    <div id="modalwrapper">
+        <span class="deletebutton">
+          <img src="/images/delete.png" />
+        </span>
+      <h1>Welcome. Here are tips on how to use this site:</h1>
+      <div id="helpmodal">
+        <img id="modalimage" src="/images/NUX.jpg" />
+      </div>
+    </div>
+  </div>
+  
+  <nav>
+    <ul>
+      <li><img onclick="toggleHelpModal()" src="/images/help.png" alt="Help" /></li>
+      <!--<li><img src="" alt="Schedule" /></li>-->
+      <li><a href="/logout"><img src="/images/logout.png" alt="Log Out" /></li></a>
+    </ul>
+  </nav>
   <div class="bookshelf">
     <a style="position:absolute; top:0; left:-8em;" href="/logout">Logout</a>
     <div class="top"></div>
@@ -98,12 +117,18 @@
     }
   });
 
-  //need to call this function on every ajax search call
-  function bindClickyPapers() {
-    $('.papers:not(.expanded)').click(function(){
-      $('.papers.expanded').removeClass('expanded');
-      $(this).addClass('expanded');
-    });
+  function toggleHelpModal() {
+    $('#modalbackground').toggleClass('nodisplay');
   }
+
+  toggleHelpModal();
+
+  $('#modalbackground').click(toggleHelpModal);
+
+  $('#modalwrapper').click(function(){
+    return false;
+  });
+
+  $('#modalwrapper .deletebutton').click(toggleHelpModal)
 </script>
 </html>
