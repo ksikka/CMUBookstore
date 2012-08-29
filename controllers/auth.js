@@ -41,6 +41,7 @@ function handleEmail(req,res,doc) {
           res.send("error, see logs",500);
         }
         else {
+          req.firstTime = true;
           authorize(doc,req,res);
         }
       });
@@ -90,9 +91,10 @@ function authorize(doc,req,res) {
   doc.save(function(err){
     if(err)
       console.log("Error " + err);
-      req.session.user = doc;
-      req.session.save(function() {
-        res.send({success:true, redirect: '/'});
+    req.session.user = doc;
+    req.session.firstTime = req.firstTime;
+    req.session.save(function() {
+      res.send({success:true, redirect: '/'});
     });
   });
 }

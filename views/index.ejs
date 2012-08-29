@@ -121,7 +121,9 @@
     $('#modalbackground').toggleClass('nodisplay');
   }
 
+  <% if( !firstTime ) { %>
   toggleHelpModal();
+  <% } %>
 
   $('#modalbackground').click(toggleHelpModal);
 
