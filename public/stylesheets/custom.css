@@ -8,7 +8,7 @@
 #modalbackground {
   position:absolute;
   top:0;right:0;bottom:0;left:0;
-  height:100%;
+  height:200%;
   width:100%;
   background-color:rgba(0,0,0,.5);
   z-index:999;
@@ -27,6 +27,7 @@
 #modalwrapper .deletebutton {
   float:right;
   margin-top:10px;
+  margin-right: 10px;
 }
 
 #modalwrapper h1 {
@@ -323,6 +324,39 @@ input.large_box
 
 .papers:not(.expanded):hover {
   cursor: pointer;
+
+
+  -webkit-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175),
+        0 0 4px rgba(0, 0, 0, 0.2),
+        inset 0 0 25px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175),
+        0 0 4px rgba(0, 0, 0, 0.2),
+        inset 0 0 25px rgba(0, 0, 0, 0.1);
+  box-shadow:
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175),
+        0 0 4px rgba(0, 0, 0, 0.2),
+        inset 0 0 25px rgba(0, 0, 0, 0.1);
+    
 }
 
 .papers:not(.expanded):hover .title {
@@ -331,13 +365,22 @@ input.large_box
 }
 
 .papers.expanded  {
-  height: 280px;
+  height: 300px;
 }
 
-.buysell,.pricing {
+.buysell, .buysell2 {
   float:left;
   width:200px;
+  padding: 10px;
+  background-color: #EEE;
+  height: 110px;
 }
+
+.buysell2 {
+  margin-left:40px;
+  /*border-left: solid 1px #dddedd;*/
+}
+
 .pricing {
   margin-left:40px;
   padding-left:20px;
@@ -356,8 +399,9 @@ input.large_box
   margin-bottom:0
 }
 .expanded_book form{ margin-bottom: 10px; }
-.buysell form button { float:right; margin: 0; }
-.buysell form input { width:4em; margin: auto 15px auto 5px; }
+.buysell form button, .buysell2 form button { float:right; margin: 0; }
+.buysell form input, .buysell2 form input { width:4em; margin: auto 15px auto 5px; height: 28px;}
+
 .expanded_book {
   margin-top:25px;
 }
@@ -431,4 +475,21 @@ input.large_box
 
 input:focus {
   outline: none;
+}
+
+.onlinepricing {
+  clear:both; 
+  padding-top:20px; 
+  font-weight:bold;
+  font-size: 20px;
+  font-family: 'Bree Serif', Georgia, 'Times New Roman', serif;
+};
+
+.large {
+}
+
+#booksearchbutton {
+  width: 180px;
+  font-size: 16px;
+  line-height: 20px;
 }
