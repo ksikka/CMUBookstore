@@ -26,20 +26,18 @@
           <div class="expanded_book">
             <div class="buysell">
               <form onsubmit="return buy(this)" book_id="<%= book_id %>">
-                <h3>Want to buy?</h3>
+                <h3>Live email notifications:</h3>
                 <!--<span class="q">what is this?</span>-->
                 <label>Max buying price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
                 <button type="submit" class="green">Buy</button>
               </form>
-            </div>
-            <div class="buysell2">
-              <h3>Want to sell?</h3>
               <form onsubmit="return sell(this)" book_id="<%= book_id %>">
                 <label>Min selling price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
                 <button type="submit" class="blue">Sell</button>
               </form>
             </div>
-            <h3 style="clear:both; padding-top:10px;">If you want to shop online:</h3>
+            <div class="pricing">
+              <h3>Shop online:</h3>
                 <% if (typeof book.pricing != "undefined" && book.pricing.length > 0) { %>
                 <table>
                 <% for(var k = 0; k < Math.min(5,book.pricing.length); k++) {  %>
@@ -53,6 +51,7 @@
                 <%} else { %>
                   Coming soon...
                 <% } %>
+            </div>
             <div style="clear:both"></div>
           </div>
       </div>
