@@ -27,7 +27,7 @@
             <div class="buysell">
               <form onsubmit="return buy(this)" book_id="<%= book_id %>">
                 <h3>Live email notifications:</h3>
-                <span class="q">what is this?</span>
+                <!--<span class="q">what is this?</span>-->
                 <label>Max buying price:</label> $<input class="price" type="text" name="price" /><span class="detail">(at least 0)</span>
                 <button type="submit" class="green">Buy</button>
               </form>
@@ -38,16 +38,19 @@
             </div>
             <div class="pricing">
               <h3>Shop online:</h3>
-              <table>
-                <% if (typeof book.pricing != "undefined") { %>
+                <% if (typeof book.pricing != "undefined" && book.pricing.length > 0) { %>
+                <table>
                 <% for(var k = 0; k < Math.min(5,book.pricing.length); k++) {  %>
-                <% var p = book.pricing[k]; %>
+                  <% var p = book.pricing[k]; %>
                   <tr>
                     <td><a href="<%= p.link %>" target="_blank"><%- p.store %></a></td>
                     <td>$<%= p.price.toFixed(2) %></td>
                   </tr>
-                  <% }} %>
-              </table>
+                <% } %>
+                </table>
+                <%} else { %>
+                  Coming soon...
+                <% } %>
             </div>
             <div style="clear:both"></div>
           </div>
