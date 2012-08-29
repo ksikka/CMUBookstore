@@ -32,7 +32,7 @@ function fixSearchBindings() {
     $(this).addClass('expanded');
   });
 
-  $('.papers.expanded').click({
+  $('.papers.expanded').click(function(){
     $('.papers.expanded').removeClass('expanded');
   });
 }
