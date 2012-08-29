@@ -137,7 +137,7 @@ $('document').ready(function(){
   });
 
   $('#booksearchbutton').click(function(e){
-            $(".bevel").animate({
+        $(".bevel").animate({
           paddingBottom:'10px'
         }, 900);
 
