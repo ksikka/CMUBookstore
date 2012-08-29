@@ -27,9 +27,16 @@ function getSearchResults(q,callback) {
 }
 
 function fixSearchBindings() {
-  $('.papers:not(.expanded)').click(function(){
-    $('.papers.expanded').removeClass('expanded');
-    $(this).addClass('expanded');
+  $('.papers').click(function(){
+    //$('.papers.expanded').removeClass('expanded');
+
+    if($(this).is('.expanded')) {
+       $('.papers.expanded').removeClass('expanded');
+    }
+    else
+    {
+      $(this).addClass('expanded');
+    }
   });
 }
 
@@ -128,6 +135,20 @@ $('document').ready(function(){
       , renderSearchResults);
     return false;
   });
+
+  $('#booksearchbutton').click(function(e){
+            $(".bevel").animate({
+          paddingBottom:'10px'
+        }, 900);
+
+        $(".large_search").animate({
+          marginTop:'25px'
+        }, 900)
+
+        $("hr").slideUp();
+    var q = $('form.search').serialize();
+    getSearchResults(q, renderSearchResults);
+  })
 
   //initialize lists
   
