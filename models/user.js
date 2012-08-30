@@ -5,7 +5,7 @@ var userSchema = new Schema({
   _id:Schema.ObjectId,
   andrew_id: {type:String, required:true},
   name: {type:String, required:true},
-  email: {type:[String], required:true},
+  email: {type:String, required:true},
   email_count: {type:Number, default:0},
 
   created_at: {type:Date, default:null},
@@ -28,3 +28,13 @@ exports.userSchema = userSchema;
 exports.User = User;
 
 console.log("loaded the user model");
+
+// This is the demo user initialization.
+// It should never be shown in any email
+demoUser = new User()
+demoUser.andrew_id = 'demo';
+demoUser.name = 'Demo';
+demoUser.email = 'demo'; // blacklisted in the emailer
+demoUser.save(function(err){
+  if(err) console.log(err);
+});

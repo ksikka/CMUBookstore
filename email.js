@@ -18,10 +18,10 @@ function send(to_address, subject, body, callback) {
       host : "smtp.sendgrid.net",
       port : "587",
       domain : "tartantextbooks.com",
-      to : "" + to_address,
+      to : to_address,
       from : "admin@tartantextbooks.com",
       subject : subject + " - Tartan Textbooks",
-      html: "" + body,
+      html: body,
       authentication : "login",
       username : sgusername,
       password : sgpassword
@@ -99,35 +99,38 @@ function initialEmail(action, currentUser, book, matching_users,callback){
 }
 
 exports.notifyUsers = function(currentUser,action,book,price) {
-  var isbn = book._id;
-  //assumes buying action
-  // find users who have book AND price in range
-  var mongoQuery = {};
-  otherAction = action === "buy" ? "sell" : "buy";
-  mongoQuery[otherAction+"ing_ids"] = isbn;
-  user.User.find(mongoQuery,function(err,matching_users){
-    if(!matching_users) matching_users = [];
-    //console.log("matching users: "+matching_users);
-    var filtered_users = [];
-    for(var i = 0; i < matching_users.length; i++) {
-      var user = matching_users[i];
-      //console.log(user);
-      var bookIndex = user[otherAction+"ing_ids"].indexOf(isbn);
-      var matching_price = user[otherAction+"ing_prices"][bookIndex];
-      //console.log(matching_price);
-      var userCares = action == "buy" ? matching_price <= price : matching_price >= price;
-      if(userCares) {
-        // send an email asynchronously
-        //console.log("care");
-        incrementalEmail(action, user, book, currentUser);
-        filtered_users.push(user);
-      } else {
-        //console.log("doesn't care");
+  if (currentUser.email !== 'demo') {
+    var isbn = book._id;
+    //assumes buying action
+    // find users who have book AND price in range
+    var mongoQuery = {};
+    otherAction = action === "buy" ? "sell" : "buy";
+    mongoQuery[otherAction+"ing_ids"] = isbn;
+    user.User.find(mongoQuery,function(err,matching_users){
+      if(!matching_users) matching_users = [];
+      //console.log("matching users: "+matching_users);
+      var filtered_users = [];
+      for(var i = 0; i < matching_users.length; i++) {
+        var user = matching_users[i];
+        if(user.email === 'demo') continue;
+        //console.log(user);
+        var bookIndex = user[otherAction+"ing_ids"].indexOf(isbn);
+        var matching_price = user[otherAction+"ing_prices"][bookIndex];
+        //console.log(matching_price);
+        var userCares = action == "buy" ? matching_price <= price : matching_price >= price;
+        if(userCares) {
+          // send an email asynchronously
+          //console.log("care");
+          incrementalEmail(action, user, book, currentUser);
+          filtered_users.push(user);
+        } else {
+          //console.log("doesn't care");
+        }
       }
-    }
 
-    initialEmail(action, currentUser, book, filtered_users);
-  });
+      initialEmail(action, currentUser, book, filtered_users);
+    });
+  }
 }
 
 exports.body = function(link_string) {
