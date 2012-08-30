@@ -31,10 +31,11 @@ console.log("loaded the user model");
 
 // This is the demo user initialization.
 // It should never be shown in any email
-demoUser = new User()
+demoUser = {};
 demoUser.andrew_id = 'demo';
 demoUser.name = 'Demo';
 demoUser.email = 'demo'; // blacklisted in the emailer
-demoUser.save(function(err){
-  if(err) console.log(err);
-});
+User.update({andrew_id:'demo'},demoUser,{upsert:true},function(err){
+  if(err) { console.log("Error when initing demo user: " + err); } else { console.log("Inited demo user");}});
+
+
